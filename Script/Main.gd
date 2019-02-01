@@ -16,7 +16,7 @@ var width = 30  # width of map (in tiles)
 var height = 40  # height of map (in tiles)
 var scr_size = OS.window_size
 var curr_touch_pos = Vector2(0, 0)
-var prev_touch_pos = Vector2(0, -1)
+var prev_touch_pos = Vector2(-1, 0)
 var line_points = []
 
 # get a reference to the map for convenience
@@ -71,6 +71,9 @@ func make_maze():
 		elif stack:
 			current = stack.pop_back()
 		#yield(get_tree(), "idle_frame")
+		
+		#set first open
+		Map.set_cellv( Vector2(0, 0), Map.get_cellv(Vector2(0, 0)) - 8)
 
 func pixel_to_grid(pixel_cord):
 	var new_x = floor((pixel_cord.x - x_start)/tile_size.x)
@@ -98,9 +101,10 @@ func draw_line(curr_touch_pos):
 	
 	if(cell_walls.has(curr_touch_pos - prev_touch_pos)):
 		#check if valid move
-		#var dir = prev_touch_pos - curr_touch_pos
-		#if(Map.get_cellv(curr_touch_pos) != 15 - cell_walls[dir]):
-		#	return
+		var dir = prev_touch_pos - curr_touch_pos
+		if(Map.get_cellv(curr_touch_pos) & cell_walls[dir]):
+			print("*Cant move")
+			return
 		
 		prev_touch_pos = curr_touch_pos
 		Line.add_point(grid_to_pixel(curr_touch_pos))
