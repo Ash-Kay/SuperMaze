@@ -17,7 +17,7 @@ var height = 40  # height of map (in tiles)
 var scr_size = OS.window_size
 
 var curr_touch_grid = Vector2(0, 0)
-var prev_touch_grid = Vector2(-1, 0)
+#var prev_touch_grid = Vector2(-1, 0)
 var base_touch_pos = Vector2(1080/2, 1920/2)
 var curr_touch_pos
 
@@ -136,8 +136,6 @@ func touch_input():
 	
 	if Input.is_action_pressed("ui_click") and can_draw:
 		
-		#curr_touch_grid = pixel_to_grid(get_viewport().get_mouse_position())
-		#curr_swipe_dir  = get_swipe_dir()
 		if(can_move(curr_touch_grid + get_swipe_dir(), curr_touch_grid)):
 			curr_touch_grid +=  get_swipe_dir()
 			print(curr_touch_grid)
@@ -145,9 +143,6 @@ func touch_input():
 		
 		can_draw = false
 		cool_down_timer.start()
-		
-		#print("point added at: "+ String(grid_to_pixel(curr_touch_grid)))
-		#pixel_to_grid(get_global_mouse_position())
 
 func draw_line():
 	#if go back remove line point
@@ -157,8 +152,6 @@ func draw_line():
 	else:
 		Line.add_point(grid_to_pixel(curr_touch_grid))
 		line_points.append(curr_touch_grid)
-	#prev_touch_grid = curr_touch_grid
-		#print("point added at: "+ String(grid_to_pixel(curr_touch_grid)))
 
 func get_swipe_dir():
 	curr_touch_pos = get_viewport().get_mouse_position()
