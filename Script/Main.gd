@@ -25,6 +25,9 @@ var line_points = []
 var cool_down_timer
 var can_draw = true
 
+var start_point
+var end_point
+
 # get a reference to the map for convenience
 onready var Map = $TileMap
 onready var Line = $Line2D
@@ -51,6 +54,7 @@ func _ready():
 	Map.position = Vector2(x_margin/2, y_margin/2)
 	make_maze()
 	
+	curr_touch_grid = start_point
 	Line.add_point(grid_to_pixel(curr_touch_grid))
 	line_points.append(curr_touch_grid)
 
@@ -97,8 +101,11 @@ func make_maze():
 		#yield(get_tree(), "idle_frame")
 		
 	#set first and last open
-	Map.set_cellv( Vector2(0, 0), Map.get_cellv(Vector2(0, 0)) - W)
-	Map.set_cellv( Vector2(width-1, height-1), Map.get_cellv(Vector2(width-1, height-1)) - E)
+	start_point = Vector2(randi() % int(width), 0)
+	end_point = Vector2(randi() % int(width), height-1)
+	
+	Map.set_cellv(start_point, Map.get_cellv(start_point) - N)
+	Map.set_cellv( end_point, Map.get_cellv(end_point) - S)
 
 #+++++++++++++++++++++++++ HELPER +++++++++++++++++++++++++
 
