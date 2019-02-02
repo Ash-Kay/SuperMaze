@@ -151,19 +151,10 @@ func draw_line():
 	if(line_points.size() > 2 and curr_touch_grid == line_points[line_points.size()-2]):
 		Line.remove_point(line_points.size()-1)
 		line_points.pop_back()
-	
-	#print("can move: "+ String(can_move()))
-	
-#	if(cell_walls.has(curr_touch_grid - prev_touch_grid)):
-#		#check if valid move
-#		var dir = prev_touch_grid - curr_touch_grid
-#		if(Map.get_cellv(curr_touch_grid) & cell_walls[dir]):
-#			print("*Cant move")
-#			return
-	#if(can_move()):		
+	else:
+		Line.add_point(grid_to_pixel(curr_touch_grid))
+		line_points.append(curr_touch_grid)
 	prev_touch_grid = curr_touch_grid
-	Line.add_point(grid_to_pixel(curr_touch_grid))
-	line_points.append(curr_touch_grid)
 		#print("point added at: "+ String(grid_to_pixel(curr_touch_grid)))
 
 func get_swipe_dir():
@@ -182,6 +173,6 @@ func get_swipe_dir():
 			if(dir.y > 0):
 				dir.y = 1
 			else:
-				dir.y = -1	
+				dir.y = -1
 	#print(dir)
 	return dir
