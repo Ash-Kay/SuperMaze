@@ -140,8 +140,9 @@ func touch_input():
 #			#print(curr_touch_grid)
 #			draw_line()
 #			get_swipe_norm(curr_touch_grid)
-		curr_touch_grid +=  get_swipe_norm(curr_touch_grid)
-		#draw_line()
+		if get_swipe_norm(curr_touch_grid):
+			curr_touch_grid +=  get_swipe_norm(curr_touch_grid)
+			draw_line()
 		print("point added: "+ String(curr_touch_grid))
 		can_draw = false
 		cool_down_timer.start()
@@ -182,7 +183,6 @@ func get_swipe_norm(ctg):
 	if(curr_touch_pos != base_touch_pos):
 		dir = curr_touch_pos - base_touch_pos
 		dir = dir.normalized()
-		#print("dir: "+String(dir))
 		
 		if abs(dir.x)> abs(dir.y):
 			if can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
@@ -198,36 +198,5 @@ func get_swipe_norm(ctg):
 			elif abs(dir.x) > 0.4 and can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
 				print(Vector2(round(dir.x),0))
 				return Vector2(round(dir.x),0)
-#
-#		if abs(dir.x)> abs(dir.y):
-#			if can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
-#				print(Vector2(ctg.x + round(dir.x),0))
-#				return Vector2(ctg.x + round(dir.x),0)
-#			elif abs(dir.y) > 0.5 and can_move(Vector2(ctg.x, ctg.y + round(dir.y)), ctg):
-#				return Vector2(0, ctg.y + round(dir.y))
-#		else:
-#			if can_move(Vector2(ctg.x, ctg.y + round(dir.y)), ctg):
-#				print(Vector2(ctg.x, ctg.y + round(dir.y)), ctg)
-#				return Vector2(0, ctg.y + round(dir.y))
-#			elif abs(dir.x) > 0.5 and can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
-#				return Vector2(ctg.x + round(dir.x),0)
-		
-#		if abs(dir.x)> abs(dir.y) and can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
-#			print("case1")
-#			return Vector2(ctg.x + round(dir.x),0)
-#
-#			if abs(dir.y) > 0.5 and can_move(Vector2(ctg.x, ctg.y + round(dir.y)), ctg):
-#				print("case2")
-#				return Vector2(0, ctg.y + round(dir.y))
-#
-#		if abs(dir.y)> abs(dir.x) and can_move(Vector2(ctg.x, ctg.y + round(dir.y)), ctg):
-#			print("case3")
-#			return Vector2(0, ctg.y + round(dir.y))
-#
-#			if abs(dir.x) > 0.5 and can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
-#				print("case4")
-#				return Vector2(ctg.x + round(dir.x),0)
-			
-			
-	#print("ctg: "+String(ctg))
-	return Vector2(0, 0)
+				
+	return false
