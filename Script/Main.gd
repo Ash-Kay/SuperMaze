@@ -143,7 +143,7 @@ func touch_input():
 		if get_swipe_norm(curr_touch_grid):
 			curr_touch_grid +=  get_swipe_norm(curr_touch_grid)
 			draw_line()
-		print("point added: "+ String(curr_touch_grid))
+			print("point added: "+ String(curr_touch_grid))
 		can_draw = false
 		cool_down_timer.start()
 
@@ -188,15 +188,14 @@ func get_swipe_norm(ctg):
 			if can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
 				print(Vector2(round(dir.x),0))
 				return Vector2(round(dir.x),0)
-			elif abs(dir.y) > 0.4 and can_move(Vector2(ctg.x, ctg.y + round(dir.y)), ctg):
+			elif abs(dir.y) > 0.1 and can_move(Vector2(ctg.x, ctg.y + round(dir.y)), ctg):
 				print(Vector2(0,round(dir.y)))
 				return Vector2(0,round(dir.y))
 		else:
 			if can_move(Vector2(ctg.x, ctg.y + round(dir.y)), ctg):
 				print(Vector2(0,round(dir.y)))
 				return Vector2(0,round(dir.y))
-			elif abs(dir.x) > 0.4 and can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
+			elif abs(dir.x) > 0.1 and can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
 				print(Vector2(round(dir.x),0))
 				return Vector2(round(dir.x),0)
-				
 	return false

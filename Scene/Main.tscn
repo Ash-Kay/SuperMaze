@@ -1,7 +1,93 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Script/Main.gd" type="Script" id=1]
-[ext_resource path="res://Sprite/TileSet.tres" type="TileSet" id=2]
+[ext_resource path="res://Sprite/blank.png" type="Texture" id=2]
+[ext_resource path="res://Sprite/TileSet.tres" type="TileSet" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+
+render_priority = 0
+blend_mode = 1
+light_mode = 0
+
+[sub_resource type="Environment" id=2]
+
+background_mode = 4
+background_sky_custom_fov = 0.0
+background_color = Color( 0, 0, 0, 1 )
+background_energy = 1.0
+background_canvas_max_layer = 0
+ambient_light_color = Color( 0, 0, 0, 1 )
+ambient_light_energy = 1.0
+ambient_light_sky_contribution = 1.0
+fog_enabled = false
+fog_color = Color( 0.5, 0.6, 0.7, 1 )
+fog_sun_color = Color( 1, 0.9, 0.7, 1 )
+fog_sun_amount = 0.0
+fog_depth_enabled = true
+fog_depth_begin = 10.0
+fog_depth_curve = 1.0
+fog_transmit_enabled = false
+fog_transmit_curve = 1.0
+fog_height_enabled = false
+fog_height_min = 0.0
+fog_height_max = 100.0
+fog_height_curve = 1.0
+tonemap_mode = 0
+tonemap_exposure = 1.0
+tonemap_white = 1.0
+auto_exposure_enabled = false
+auto_exposure_scale = 0.4
+auto_exposure_min_luma = 0.05
+auto_exposure_max_luma = 8.0
+auto_exposure_speed = 0.5
+ss_reflections_enabled = false
+ss_reflections_max_steps = 64
+ss_reflections_fade_in = 0.15
+ss_reflections_fade_out = 2.0
+ss_reflections_depth_tolerance = 0.2
+ss_reflections_roughness = true
+ssao_enabled = false
+ssao_radius = 1.0
+ssao_intensity = 1.0
+ssao_radius2 = 0.0
+ssao_intensity2 = 1.0
+ssao_bias = 0.01
+ssao_light_affect = 0.0
+ssao_color = Color( 0, 0, 0, 1 )
+ssao_quality = 0
+ssao_blur = 3
+ssao_edge_sharpness = 4.0
+dof_blur_far_enabled = false
+dof_blur_far_distance = 10.0
+dof_blur_far_transition = 5.0
+dof_blur_far_amount = 0.1
+dof_blur_far_quality = 1
+dof_blur_near_enabled = false
+dof_blur_near_distance = 2.0
+dof_blur_near_transition = 1.0
+dof_blur_near_amount = 0.1
+dof_blur_near_quality = 1
+glow_enabled = true
+glow_levels/1 = false
+glow_levels/2 = false
+glow_levels/3 = true
+glow_levels/4 = false
+glow_levels/5 = true
+glow_levels/6 = false
+glow_levels/7 = false
+glow_intensity = 0.8
+glow_strength = 1.0
+glow_bloom = 0.1
+glow_blend_mode = 0
+glow_hdr_threshold = 1.0
+glow_hdr_scale = 2.0
+glow_bicubic_upscale = false
+adjustment_enabled = false
+adjustment_brightness = 1.0
+adjustment_contrast = 1.0
+adjustment_saturation = 1.0
+_sections_unfolded = [ "Glow" ]
 
 [node name="Node" type="Node" index="0"]
 
@@ -9,10 +95,20 @@ script = ExtResource( 1 )
 x_margin = 32.0
 y_margin = 32.0
 
-[node name="TileMap" type="TileMap" parent="." index="0"]
+[node name="BG" type="Sprite" parent="." index="0"]
 
+modulate = Color( 0.129412, 0.172549, 0.231373, 1 )
+position = Vector2( 451.377, 1000.5 )
+scale = Vector2( 446.715, 501.248 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Visibility" ]
+
+[node name="TileMap" type="TileMap" parent="." index="1"]
+
+modulate = Color( 0, 0.811765, 1, 1 )
+material = SubResource( 1 )
 mode = 0
-tile_set = ExtResource( 2 )
+tile_set = ExtResource( 3 )
 cell_size = Vector2( 64, 64 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
@@ -28,15 +124,22 @@ collision_mask = 1
 occluder_light_mask = 1
 format = 1
 tile_data = PoolIntArray( -2883516, 0, 0, -2883515, 0, 0, -2883514, 0, 0, -2817977, 0, 0, -2817976, 0, 0, -2817975, 0, 0, -2817974, 0, 0, -2752437, 0, 0, -2752436, 0, 0, -2752435, 0, 0, -2752434, 0, 0, -2686897, 0, 0, -2686896, 0, 0, -2686895, 0, 0, -2686894, 0, 0, -2621357, 0, 0, -2621356, 0, 0, -2621355, 0, 0, -2621354, 0, 0, -2555817, 0, 0, -2555816, 0, 0, -2555815, 0, 0, -2555814, 0, 0, -2490277, 0, 0, -2490276, 0, 0, -2490275, 0, 0, -2490274, 0, 0, -2424737, 0, 0, -2424736, 0, 0, -2424735, 0, 0, -2424734, 0, 0, -2424688, 0, 0, -2424687, 0, 0, -2359197, 0, 0, -2359196, 0, 0, -2359195, 0, 0, -2359194, 0, 0, -2359156, 0, 0, -2359155, 0, 0, -2359154, 0, 0, -2359153, 0, 0, -2293657, 0, 0, -2293656, 0, 0, -2293655, 0, 0, -2293654, 0, 0, -2293623, 0, 0, -2293622, 0, 0, -2293621, 0, 0, -2228117, 0, 0, -2228116, 0, 0, -2228115, 0, 0, -2228114, 0, 0, -2228090, 0, 0, -2228089, 0, 0, -2228088, 0, 0, -2162577, 0, 0, -2162576, 0, 0, -2162558, 0, 0, -2162557, 0, 0, -2162556, 0, 0, -2162555, 0, 0, -2097025, 0, 0, -2097024, 0, 0, -2097023, 0, 0, -2031493, 0, 0, -2031492, 0, 0, -2031491, 0, 0, -2031490, 0, 0, -1965960, 0, 0, -1965959, 0, 0, -1965958, 0, 0, -1900427, 0, 0, -1900426, 0, 0, -1900425, 0, 0, -1834895, 0, 0, -1834894, 0, 0, -1834893, 0, 0, -1834892, 0, 0, -1769362, 0, 0, -1769361, 0, 0, -1769360, 0, 0, -1703830, 0, 0, -1703829, 0, 0, -1703828, 0, 0, -1703827, 0, 0, -1638297, 0, 0, -1638296, 0, 0, -1638295, 0, 0, -1572764, 0, 0, -1572763, 0, 0, -1572762, 0, 0, -1507232, 0, 0, -1507231, 0, 0, -1507230, 0, 0, -1507229, 0, 0, -1441699, 0, 0, -1441698, 0, 0, -1441697, 0, 0, -1376167, 0, 0, -1376166, 0, 0, -1376165, 0, 0, -1376164, 0, 0, -1310634, 0, 0, -1310633, 0, 0, -1310632, 0, 0, -1245102, 0, 0, -1245101, 0, 0, -1245100, 0, 0, -1245099, 0, 0, -1179569, 0, 0, -1179568, 0, 0, -1179567, 0, 0, -1114036, 0, 0, -1114035, 0, 0, -1114034, 0, 0, -1048504, 0, 0, -1048503, 0, 0, -1048502, 0, 0, -1048501, 0, 0, -982971, 0, 0, -982970, 0, 0, -982969, 0, 0, -917439, 0, 0, -917438, 0, 0, -917437, 0, 0, -917436, 0, 0, -851906, 0, 0, -851905, 0, 0, -851904, 0, 0, -786373, 0, 0, -786372, 0, 0, -786371, 0, 0, -720841, 0, 0, -720840, 0, 0, -720839, 0, 0, -720838, 0, 0, -655308, 0, 0, -655307, 0, 0, -655306, 0, 0, -589776, 0, 0, -589775, 0, 0, -589774, 0, 0, -589773, 0, 0, -524243, 0, 0, -524242, 0, 0, -524241, 0, 0, -458710, 0, 0, -458709, 0, 0, -458708, 0, 0, -393178, 0, 0, -393177, 0, 0, -393176, 0, 0, -393175, 0, 0, -327644, 0, 0, -327643, 0, 0, 0, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131079, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 983083, 0, 0, 983084, 0, 0, 1048616, 0, 0, 1048617, 0, 0, 1048618, 0, 0, 1114150, 0, 0, 1114151, 0, 0, 1179683, 0, 0, 1179684, 0, 0, 1179685, 0, 0, 1245216, 0, 0, 1245217, 0, 0, 1245218, 0, 0, 1310750, 0, 0, 1310751, 0, 0, 1376283, 0, 0, 1376284, 0, 0, 1376285, 0, 0, 1441817, 0, 0, 1441818, 0, 0 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Line2D" type="Line2D" parent="." index="1"]
+[node name="Line2D" type="Line2D" parent="." index="2"]
 
 points = PoolVector2Array(  )
 width = 5.0
-default_color = Color( 0.4, 0.5, 1, 1 )
+default_color = Color( 1, 1, 1, 1 )
 texture_mode = -11447983
 sharp_limit = 2.0
 round_precision = 8
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="3"]
+
+environment = SubResource( 2 )
 
 
