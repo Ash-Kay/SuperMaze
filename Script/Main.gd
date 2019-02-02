@@ -50,6 +50,9 @@ func _ready():
 	#centre the map
 	Map.position = Vector2(x_margin/2, y_margin/2)
 	make_maze()
+	
+	Line.add_point(grid_to_pixel(curr_touch_grid))
+	line_points.append(curr_touch_grid)
 
 func _process(delta):
 	touch_input()
@@ -111,7 +114,7 @@ func grid_to_pixel(grid_cord):
 	#print("pg: "+String(new_x) + " " + String(new_y))
 	return Vector2(new_x, new_y)
 
-func can_move(ctg = curr_touch_grid, ptg = prev_touch_grid):
+func can_move(ctg, ptg):
 	if(cell_walls.has(ctg - ptg)):
 		#check if valid move
 		var dir = ptg - ctg
@@ -154,7 +157,7 @@ func draw_line():
 	else:
 		Line.add_point(grid_to_pixel(curr_touch_grid))
 		line_points.append(curr_touch_grid)
-	prev_touch_grid = curr_touch_grid
+	#prev_touch_grid = curr_touch_grid
 		#print("point added at: "+ String(grid_to_pixel(curr_touch_grid)))
 
 func get_swipe_dir():
