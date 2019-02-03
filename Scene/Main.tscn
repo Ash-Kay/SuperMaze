@@ -47,7 +47,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Line2D" type="Line2D" parent="." index="2"]
+[node name="SolvedPath" type="Line2D" parent="." index="2"]
+
+points = PoolVector2Array(  )
+width = 5.0
+default_color = Color( 0.949951, 1, 0.359375, 1 )
+texture_mode = -11447983
+sharp_limit = 2.0
+round_precision = 8
+
+[node name="Line2D" type="Line2D" parent="." index="3"]
 
 points = PoolVector2Array(  )
 width = 5.0
@@ -56,11 +65,11 @@ texture_mode = -11447983
 sharp_limit = 2.0
 round_precision = 8
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="3"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="4"]
 
 environment = ExtResource( 4 )
 
-[node name="BGMusic" type="AudioStreamPlayer" parent="." index="4"]
+[node name="BGMusic" type="AudioStreamPlayer" parent="." index="5"]
 
 stream = ExtResource( 5 )
 volume_db = 0.0
@@ -69,7 +78,7 @@ autoplay = true
 mix_target = 0
 bus = "Master"
 
-[node name="Move" type="AudioStreamPlayer" parent="." index="5"]
+[node name="Move" type="AudioStreamPlayer" parent="." index="6"]
 
 stream = ExtResource( 6 )
 volume_db = -15.0

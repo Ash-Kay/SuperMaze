@@ -33,6 +33,7 @@ var end_point
 # get a reference to the map for convenience
 onready var Map = $TileMap
 onready var Line = $Line2D
+onready var SolveLine = $SolvedPath
 
 #+++++++++++++++++++++++++ READY AND PROCESS +++++++++++++++++++++++++
 
@@ -113,6 +114,46 @@ func gen_maze_init():
 	curr_touch_grid = start_point
 	Line.add_point(grid_to_pixel(curr_touch_grid))
 	line_points.append(curr_touch_grid)
+	dfs(start_point)
+
+#+++++++++++++++++++++++++ MAZE SOLVING +++++++++++++++++++
+
+func dfs(start):
+	var q = []
+	var tracker = {}
+	var curr
+	var unvisited = []
+	var reached = false
+	q.append(start)
+	
+	for x in range(width):
+		for y in range(height):
+			unvisited.append(Vector2(x, y))
+	
+	while q and !reached:
+		curr = q.front()
+		for n in cell_walls.keys():
+			if (curr + n) in unvisited and can_move(curr + n, curr):
+				q.append(curr + n)
+				tracker[curr + n] = curr
+				unvisited.erase(curr + n)
+				if curr+n == end_point:
+					reached = true
+		q.pop_front()
+	
+	backtracker(tracker)
+
+func backtracker(dic):
+	var curr = dic[end_point]
+	
+	while curr != start_point:
+		SolveLine.add_point(grid_to_pixel(curr))
+		curr = dic[curr]
+	
+	print(SolveLine.get_point_count())
+	if SolveLine.get_point_count() < 200:
+		gen_maze_init()
+		SolveLine.set_points([])
 
 #+++++++++++++++++++++++++ HELPER +++++++++++++++++++++++++
 
