@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Script/Main.gd" type="Script" id=1]
-[ext_resource path="res://Sprite/blank.png" type="Texture" id=2]
+[ext_resource path="res://Scene/BG.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprite/TileSet.tres" type="TileSet" id=3]
 [ext_resource path="res://Scene/WorldEnv.tres" type="Environment" id=4]
+[ext_resource path="res://Audio/Stellardrone - Light Years - 08 Ultra Deep Field.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Audio/click_cc0.wav" type="AudioStream" id=6]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -17,13 +19,7 @@ script = ExtResource( 1 )
 x_margin = 32.0
 y_margin = 32.0
 
-[node name="BG" type="Sprite" parent="." index="0"]
-
-modulate = Color( 0.129412, 0.172549, 0.231373, 1 )
-position = Vector2( 451.377, 1000.5 )
-scale = Vector2( 446.715, 501.248 )
-texture = ExtResource( 2 )
-_sections_unfolded = [ "Visibility" ]
+[node name="BG" parent="." index="0" instance=ExtResource( 2 )]
 
 [node name="TileMap" type="TileMap" parent="." index="1"]
 
@@ -63,5 +59,23 @@ round_precision = 8
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="3"]
 
 environment = ExtResource( 4 )
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="." index="4"]
+
+stream = ExtResource( 5 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = true
+mix_target = 0
+bus = "Master"
+
+[node name="Move" type="AudioStreamPlayer" parent="." index="5"]
+
+stream = ExtResource( 6 )
+volume_db = -15.0
+pitch_scale = 0.9
+autoplay = false
+mix_target = 0
+bus = "Master"
 
 

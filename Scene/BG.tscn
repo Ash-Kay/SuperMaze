@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sprite/blank.png" type="Texture" id=1]
+
+[node name="BG" type="Sprite"]
+
+modulate = Color( 0.129412, 0.172549, 0.231373, 1 )
+position = Vector2( 451.377, 1000.5 )
+scale = Vector2( 446.715, 501.248 )
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Visibility" ]
+
+

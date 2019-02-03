@@ -16,6 +16,8 @@ var width = 30  # width of map (in tiles)
 var height = 40  # height of map (in tiles)
 var scr_size = OS.window_size
 
+var move_sfx
+
 var curr_touch_grid = Vector2(0, 0)
 #var prev_touch_grid = Vector2(-1, 0)
 var base_touch_pos = Vector2(1080/2, 1920/2)
@@ -43,6 +45,8 @@ func _ready():
 	cool_down_timer.connect("timeout", self, "on_timeout_complete")
 	add_child(cool_down_timer)
 	
+	move_sfx = $Move
+	
 	#print(OS.window_size)
 	tile_size = Map.cell_size
 	
@@ -52,11 +56,8 @@ func _ready():
 	#print(String(width)+" "+String(height))
 	#centre the map
 	Map.position = Vector2(x_margin/2, y_margin/2)
-	make_maze()
 	
-	curr_touch_grid = start_point
-	Line.add_point(grid_to_pixel(curr_touch_grid))
-	line_points.append(curr_touch_grid)
+	gen_maze_init()
 
 func _process(delta):
 	touch_input()
@@ -107,6 +108,12 @@ func make_maze():
 	Map.set_cellv(start_point, Map.get_cellv(start_point) - N)
 	Map.set_cellv( end_point, Map.get_cellv(end_point) - S)
 
+func gen_maze_init():
+	make_maze()
+	curr_touch_grid = start_point
+	Line.add_point(grid_to_pixel(curr_touch_grid))
+	line_points.append(curr_touch_grid)
+
 #+++++++++++++++++++++++++ HELPER +++++++++++++++++++++++++
 
 func pixel_to_grid(pixel_cord):
@@ -142,11 +149,6 @@ func touch_input():
 		 base_touch_pos = get_viewport().get_mouse_position()
 		
 	if Input.is_action_pressed("ui_click") and can_draw:
-#		if(can_move(curr_touch_grid + get_swipe_dir(), curr_touch_grid)):
-#			curr_touch_grid +=  get_swipe_dir()
-#			#print(curr_touch_grid)
-#			draw_line()
-#			get_swipe_norm(curr_touch_grid)
 		if get_swipe_norm(curr_touch_grid):
 			curr_touch_grid +=  get_swipe_norm(curr_touch_grid)
 			draw_line()
@@ -156,12 +158,18 @@ func touch_input():
 
 func draw_line():
 	#if go back remove line point
-	if(line_points.size() > 2 and curr_touch_grid == line_points[line_points.size()-2]):
+	if(line_points.size() >= 2 and curr_touch_grid == line_points[line_points.size()-2]):
 		Line.remove_point(line_points.size()-1)
 		line_points.pop_back()
 	else:
 		Line.add_point(grid_to_pixel(curr_touch_grid))
 		line_points.append(curr_touch_grid)
+		move_sfx.play()
+		
+	if curr_touch_grid == end_point:
+		gen_maze_init()
+		Line.set_points([])
+		line_points.clear()
 
 func get_swipe_dir():
 	curr_touch_pos = get_viewport().get_mouse_position()
