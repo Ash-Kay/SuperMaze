@@ -151,7 +151,7 @@ func backtracker(dic):
 		curr = dic[curr]
 	
 	print(SolveLine.get_point_count())
-	if SolveLine.get_point_count() < 200:
+	if SolveLine.get_point_count() < 150:
 		gen_maze_init()
 		SolveLine.set_points([])
 
