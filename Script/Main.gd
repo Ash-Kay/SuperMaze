@@ -2,6 +2,7 @@ extends Node
 
 export(float) var x_margin = 0
 export(float) var y_margin = 0
+var y_top_offset = 128
 
 const N = 1
 const E = 2
@@ -14,23 +15,23 @@ var cell_walls = {Vector2(0, -1): N, Vector2(1, 0): E,
 var tile_size = 64  # tile size (in pixels)
 var width = 30  # width of map (in tiles)
 var height = 40  # height of map (in tiles)
-var scr_size = OS.window_size
+var scr_size
 
 var move_sfx
 
 var curr_touch_grid = Vector2(0, 0)
-#var prev_touch_grid = Vector2(-1, 0)
-var base_touch_pos = Vector2(1080/2, 1920/2)
+var base_touch_pos
 var curr_touch_pos
 
 var line_points = []
 var cool_down_timer
 var can_draw = true
 
+# maze start and end points
 var start_point
 var end_point
 
-# get a reference to the map for convenience
+# get a reference of Nodes used
 onready var Map = $TileMap
 onready var Line = $Line2D
 onready var SolveLine = $SolvedPath
@@ -51,14 +52,25 @@ func _ready():
 	#print(OS.window_size)
 	tile_size = Map.cell_size
 	
-	width = floor((1080 - 2 * x_margin) / tile_size.x)
-	height = floor((1920 - 2 * y_margin) / tile_size.y)
+	if OS.get_name() != "Windows":
+		scr_size = OS.window_size
+	else:
+		scr_size = Vector2(1080,1920)#for TEST ONLY
+	
+	width = floor((scr_size.x - 2 * x_margin) / tile_size.x)
+	height = floor((scr_size.y - 2 * y_margin - y_top_offset) / tile_size.y)
 	
 	#print(String(width)+" "+String(height))
-	#centre the map
-	Map.position = Vector2(x_margin/2, y_margin/2)
+	#centre the map	
+	x_margin += (scr_size.x - width*tile_size.x)
+	Map.position = Vector2(x_margin/2 , y_margin/2 + y_top_offset)
 	
-	gen_maze_init()
+	print("maze width: "+ String(width*tile_size.x) + "  screen width: "+
+	 String(scr_size.x) + "  remainin: "+ String(scr_size.x - width*tile_size.x) +
+	"  margin: "+String(x_margin)+" "+String(y_margin) )
+	
+	#(re)make the maze,reset lines
+	reload()
 
 func _process(delta):
 	touch_input()
@@ -109,16 +121,19 @@ func make_maze():
 	Map.set_cellv(start_point, Map.get_cellv(start_point) - N)
 	Map.set_cellv( end_point, Map.get_cellv(end_point) - S)
 
-func gen_maze_init():
+func reload():
 	make_maze()
 	curr_touch_grid = start_point
-	Line.add_point(grid_to_pixel(curr_touch_grid))
-	line_points.append(curr_touch_grid)
-	dfs(start_point)
+	Line.set_points([])
+	SolveLine.set_points([])
+	line_points.clear()
+	Line.add_point(grid_to_pixel(start_point))
+	line_points.append(start_point)
+	find_solution(start_point)
 
 #+++++++++++++++++++++++++ MAZE SOLVING +++++++++++++++++++
 
-func dfs(start):
+func find_solution(start):
 	var q = []
 	var tracker = {}
 	var curr
@@ -152,20 +167,19 @@ func backtracker(dic):
 	
 	print(SolveLine.get_point_count())
 	if SolveLine.get_point_count() < 150:
-		gen_maze_init()
-		SolveLine.set_points([])
+		reload()
 
 #+++++++++++++++++++++++++ HELPER +++++++++++++++++++++++++
 
 func pixel_to_grid(pixel_cord):
 	var new_x = floor((pixel_cord.x - x_margin)/tile_size.x)
-	var new_y = floor((pixel_cord.y - y_margin)/tile_size.y)
+	var new_y = floor((pixel_cord.y - y_margin - y_top_offset)/tile_size.y)
 	#print(String(new_x) + " " + String(new_y))
 	return Vector2(new_x, new_y)
 
 func grid_to_pixel(grid_cord):
 	var new_x = x_margin/2 + grid_cord.x * tile_size.x + tile_size.x/2
-	var new_y = y_margin/2 + grid_cord.y * tile_size.y + tile_size.y/2
+	var new_y = y_margin/2 + y_top_offset + grid_cord.y * tile_size.y + tile_size.y/2
 	#print("pg: "+String(new_x) + " " + String(new_y))
 	return Vector2(new_x, new_y)
 
@@ -208,24 +222,22 @@ func draw_line():
 		move_sfx.play()
 		
 	if curr_touch_grid == end_point:
-		gen_maze_init()
-		Line.set_points([])
-		line_points.clear()
+		reload()
 
 func get_swipe_dir():
 	curr_touch_pos = get_viewport().get_mouse_position()
 	var dir = Vector2 (0, 0)
-	if(curr_touch_pos != base_touch_pos):
+	if curr_touch_pos != base_touch_pos :
 		dir = curr_touch_pos - base_touch_pos
-		if(abs(dir.x)> abs(dir.y)):
+		if abs(dir.x) > abs(dir.y) :
 			dir.y = 0
-			if(dir.x > 0):
+			if dir.x > 0 :
 				dir.x = 1
 			else:
 				dir.x = -1
 		else:
 			dir.x = 0
-			if(dir.y > 0):
+			if dir.y > 0 :
 				dir.y = 1
 			else:
 				dir.y = -1
