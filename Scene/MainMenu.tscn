@@ -51,7 +51,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor", "Hint", "Margin", "Rect", "custom_fonts" ]
 
-[node name="Button" type="Button" parent="UI" index="1"]
+[node name="Play" type="Button" parent="UI" index="1"]
 
 anchor_left = 0.5
 anchor_top = 1.0
@@ -78,6 +78,6 @@ flat = false
 align = 1
 _sections_unfolded = [ "Anchor", "Margin", "custom_fonts" ]
 
-[connection signal="button_down" from="UI/Button" to="." method="_on_Button_button_down"]
+[connection signal="pressed" from="UI/Play" to="." method="_on_Play_button_down"]
 
 

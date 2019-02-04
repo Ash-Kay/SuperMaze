@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Script/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scene/BG.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scene/WorldEnv.tres" type="Environment" id=4]
 [ext_resource path="res://Audio/Stellardrone - Light Years - 08 Ultra Deep Field.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Audio/click_cc0.wav" type="AudioStream" id=6]
+[ext_resource path="res://Fonts/Antonio_90.tres" type="DynamicFont" id=7]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -86,5 +87,45 @@ pitch_scale = 0.9
 autoplay = false
 mix_target = 0
 bus = "Master"
+
+[node name="GameGUI" type="Control" parent="." index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Button" type="Button" parent="GameGUI" index="0"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = -151.0
+margin_bottom = 136.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 7 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "HINT"
+flat = false
+align = 1
+_sections_unfolded = [ "custom_fonts" ]
+
+[connection signal="pressed" from="GameGUI/Button" to="." method="_on_solve_pressed"]
 
 

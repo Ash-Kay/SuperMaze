@@ -125,10 +125,10 @@ func reload():
 	make_maze()
 	curr_touch_grid = start_point
 	Line.set_points([])
-	SolveLine.set_points([])
 	line_points.clear()
 	Line.add_point(grid_to_pixel(start_point))
 	line_points.append(start_point)
+	clear_solve_line()
 	find_solution(start_point)
 
 #+++++++++++++++++++++++++ MAZE SOLVING +++++++++++++++++++
@@ -164,10 +164,14 @@ func backtracker(dic):
 	while curr != start_point:
 		SolveLine.add_point(grid_to_pixel(curr))
 		curr = dic[curr]
+		yield(get_tree(), "idle_frame")
 	
 	print(SolveLine.get_point_count())
 	if SolveLine.get_point_count() < 150:
 		reload()
+
+func clear_solve_line():
+	SolveLine.set_points([])
 
 #+++++++++++++++++++++++++ HELPER +++++++++++++++++++++++++
 
@@ -267,3 +271,7 @@ func get_swipe_norm(ctg):
 				print(Vector2(round(dir.x),0))
 				return Vector2(round(dir.x),0)
 	return false
+
+func _on_solve_pressed():
+	clear_solve_line()
+	find_solution(curr_touch_grid)
