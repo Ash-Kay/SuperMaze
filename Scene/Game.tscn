@@ -52,7 +52,7 @@ __meta__ = {
 
 points = PoolVector2Array(  )
 width = 5.0
-default_color = Color( 0.949951, 1, 0.359375, 1 )
+default_color = Color( 0.949951, 1, 0.359375, 0.490196 )
 texture_mode = -11447983
 sharp_limit = 2.0
 round_precision = 8
@@ -117,7 +117,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = ExtResource( 7 )
-toggle_mode = true
+toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null

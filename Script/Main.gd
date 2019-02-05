@@ -25,7 +25,7 @@ var curr_touch_pos
 
 var line_points = []
 var cool_down_timer
-var can_draw = true
+var can_draw = true #can draw after shot interval of time (timer)
 
 # maze start and end points
 var start_point
@@ -61,7 +61,7 @@ func _ready():
 	height = floor((scr_size.y - 2 * y_margin - y_top_offset) / tile_size.y)
 	
 	#print(String(width)+" "+String(height))
-	#centre the map	
+	#centre the map
 	x_margin += (scr_size.x - width*tile_size.x)
 	Map.position = Vector2(x_margin/2 , y_margin/2 + y_top_offset)
 	
@@ -155,20 +155,21 @@ func find_solution(start):
 				if curr+n == end_point:
 					reached = true
 		q.pop_front()
-	
-	backtracker(tracker)
+	backtracker(tracker, start)
 
-func backtracker(dic):
+func backtracker(dic, start):
 	var curr = dic[end_point]
 	
-	while curr != start_point:
+	while curr != start:
 		SolveLine.add_point(grid_to_pixel(curr))
 		curr = dic[curr]
-		yield(get_tree(), "idle_frame")
+		#yield(get_tree(), "idle_frame")
 	
 	print(SolveLine.get_point_count())
-	if SolveLine.get_point_count() < 150:
+	if SolveLine.get_point_count() < 150 and start == start_point:
 		reload()
+	
+	SolveLine.visible = false
 
 func clear_solve_line():
 	SolveLine.set_points([])
@@ -204,10 +205,10 @@ func on_timeout_complete():
 #+++++++++++++++++++++++++ TOUCH MANAGE +++++++++++++++++++++++++
 
 func touch_input():
-	if Input.is_action_just_pressed("ui_click"):
+	if Input.is_action_just_pressed("ui_click") and get_viewport().get_mouse_position().y > y_top_offset:
 		 base_touch_pos = get_viewport().get_mouse_position()
 		
-	if Input.is_action_pressed("ui_click") and can_draw:
+	if Input.is_action_pressed("ui_click") and can_draw and get_viewport().get_mouse_position().y > y_top_offset:
 		if get_swipe_norm(curr_touch_grid):
 			curr_touch_grid +=  get_swipe_norm(curr_touch_grid)
 			draw_line()
@@ -275,3 +276,4 @@ func get_swipe_norm(ctg):
 func _on_solve_pressed():
 	clear_solve_line()
 	find_solution(curr_touch_grid)
+	SolveLine.visible = true

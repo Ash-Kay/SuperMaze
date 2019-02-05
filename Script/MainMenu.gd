@@ -3,7 +3,7 @@ extends Node
 var gameScene
 
 func _ready():
-	gameScene = "res://Scene/Main.tscn"
+	gameScene = "res://Scene/Game.tscn"
 
 
 func _on_Play_button_down():
