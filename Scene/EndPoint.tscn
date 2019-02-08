@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sprite/StartEnd.png" type="Texture" id=1]
+
+[node name="EndPoint" type="Node2D"]
+
+editor/display_folded = true
+_sections_unfolded = [ "Visibility" ]
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Material", "Visibility" ]
+
+

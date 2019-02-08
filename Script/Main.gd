@@ -69,7 +69,9 @@ func _ready():
 	 String(scr_size.x) + "  remainin: "+ String(scr_size.x - width*tile_size.x) +
 	"  margin: "+String(x_margin)+" "+String(y_margin) )
 	
-	#(re)make the maze,reset lines
+	set_end_points()
+	
+	#(re)make the maze,reset lines	
 	reload()
 
 func _process(delta):
@@ -113,13 +115,6 @@ func make_maze():
 		elif stack:
 			current = stack.pop_back()
 		#yield(get_tree(), "idle_frame")
-		
-	#set first and last open
-	start_point = Vector2(randi() % int(width), 0)
-	end_point = Vector2(randi() % int(width), height-1)
-	
-	Map.set_cellv(start_point, Map.get_cellv(start_point) - N)
-	Map.set_cellv( end_point, Map.get_cellv(end_point) - S)
 
 func reload():
 	make_maze()
@@ -130,6 +125,34 @@ func reload():
 	line_points.append(start_point)
 	clear_solve_line()
 	find_solution(start_point)
+
+func set_end_points():
+	var sp = get_node("StartPoint")
+	var ep = get_node("EndPoint")
+	if sp:
+		sp.queue_free()
+		print("found and removed")
+	if ep:
+		ep.queue_free()
+	
+	start_point = Vector2(randi() % int(width), randi() % int(height))
+	end_point = Vector2(randi() % int(width), randi() % int(height))
+	
+	var point_scene = load("res://Scene/EndPoint.tscn")
+	
+	var start_point_sprite = point_scene.instance()
+	start_point_sprite.name = "StartPoint"
+	start_point_sprite.position = grid_to_pixel(start_point)
+	start_point_sprite.modulate = Color(1,0,0)
+	
+	var end_point_sprite = point_scene.instance()
+	end_point_sprite.name = "EndPoint"
+	end_point_sprite.position = grid_to_pixel(end_point)
+	end_point_sprite.modulate = Color(0,1,0)
+	
+	add_child(start_point_sprite)
+	add_child(end_point_sprite)
+	reload()
 
 #+++++++++++++++++++++++++ MAZE SOLVING +++++++++++++++++++
 
@@ -212,7 +235,7 @@ func touch_input():
 		if get_swipe_norm(curr_touch_grid):
 			curr_touch_grid +=  get_swipe_norm(curr_touch_grid)
 			draw_line()
-			print("point added: "+ String(curr_touch_grid))
+			#print("point added: "+ String(curr_touch_grid))
 		can_draw = false
 		cool_down_timer.start()
 
@@ -259,17 +282,17 @@ func get_swipe_norm(ctg):
 		
 		if abs(dir.x)> abs(dir.y):
 			if can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
-				print(Vector2(round(dir.x),0))
+				#print(Vector2(round(dir.x),0))
 				return Vector2(round(dir.x),0)
 			elif abs(dir.y) > 0.1 and can_move(Vector2(ctg.x, ctg.y + round(dir.y)), ctg):
-				print(Vector2(0,round(dir.y)))
+				#print(Vector2(0,round(dir.y)))
 				return Vector2(0,round(dir.y))
 		else:
 			if can_move(Vector2(ctg.x, ctg.y + round(dir.y)), ctg):
-				print(Vector2(0,round(dir.y)))
+				#print(Vector2(0,round(dir.y)))
 				return Vector2(0,round(dir.y))
 			elif abs(dir.x) > 0.1 and can_move(Vector2(ctg.x + round(dir.x), ctg.y), ctg):
-				print(Vector2(round(dir.x),0))
+				#print(Vector2(round(dir.x),0))
 				return Vector2(round(dir.x),0)
 	return false
 

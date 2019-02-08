@@ -5,7 +5,7 @@
 [ext_resource path="res://Fonts/MainTitle_Antonio_150.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Fonts/Antonio_90.tres" type="DynamicFont" id=4]
 
-[node name="MainMenu" type="Node" index="0"]
+[node name="MainMenu" type="Node"]
 
 script = ExtResource( 1 )
 
