@@ -37,6 +37,7 @@ onready var Map = $TileMap
 onready var Line = $Line2D
 onready var SolveLine = $SolvedPath
 onready var BG = $BG
+onready var HintCount = get_node("GameGUI/Container/HintCount")
 
 #+++++++++++++++++++++++++ READY AND PROCESS +++++++++++++++++++++++++
 
@@ -92,7 +93,7 @@ func RELOAD():
 
 func change_color():
 #	var color = maze_colors[ randi() % maze_colors.size() ]
-	var color = maze_colors[5]
+	var color = maze_colors[3]
 	BG.modulate = Color(color["bg"])
 	Map.modulate = Color(color["tile"])
 
@@ -204,10 +205,15 @@ func backtracker(dic, start):
 		curr = dic[curr]
 	
 	print(SolveLine.get_point_count())
-	if SolveLine.get_point_count() < 100 and start == start_point:
+	if SolveLine.get_point_count() < 150 and start == start_point:
 		reset_endpoint()
-	
-	SolveLine.visible = false
+	else:
+		var solve_points = SolveLine.get_points()
+		var solve_points_short = []
+		SolveLine.visible = false
+		for i in range(solve_points.size()-1, solve_points.size()-21, -1):
+			solve_points_short.append(solve_points[i])
+		SolveLine.set_points(solve_points_short)
 
 func clear_solve_line():
 	SolveLine.set_points([])
@@ -312,6 +318,9 @@ func get_swipe_norm(ctg):
 	return false
 
 func _on_solve_pressed():
-	clear_solve_line()
-	find_solution(curr_touch_grid)
-	SolveLine.visible = true
+	if GameManager.hint_count > 0:
+		clear_solve_line()
+		find_solution(curr_touch_grid)
+		SolveLine.visible = true
+		GameManager.use_hint()
+		GameManager.update_hint_ui(HintCount)
