@@ -72,13 +72,29 @@ func _ready():
 	"  margin: "+String(x_margin)+" "+String(y_margin) )
 	
 	maze_colors = [{"tile": "60e1ff", "bg": "212b3b", "name": "darkblue"},
-			{"tile": "7dffcb", "bg": "14440d", "name": "green"},
-			{"tile": "ff6969", "bg": "280404", "name": "red"}]
+			{"tile": "6cffe6", "bg": "083339", "name": "green"},
+			{"tile": "d48e8e", "bg": "3d0707", "name": "darkred"},
+			{"tile": "ff1d77", "bg": "2c051b", "name": "pink"},
+			{"tile": "ff971d", "bg": "1a2c05", "name": "yellowgreen"},
+			{"tile": "0000ad", "bg": "05052c", "name": "voilet"}]
 	
 	RELOAD()
 
 func _process(delta):
 	touch_input()
+
+#+++++++++++++++++++++++++ LOADER AND MODULATE +++++++++++++++++++++++++
+
+func RELOAD():
+	make_maze()
+	reset_endpoint()
+	change_color()
+
+func change_color():
+#	var color = maze_colors[ randi() % maze_colors.size() ]
+	var color = maze_colors[5]
+	BG.modulate = Color(color["bg"])
+	Map.modulate = Color(color["tile"])
 
 #+++++++++++++++++++++++++ MAZE GENRATION +++++++++++++++++++++++++
 
@@ -153,13 +169,6 @@ func set_end_points():
 	
 	end_holder.add_child(start_point_sprite)
 	end_holder.add_child(end_point_sprite)
-
-func RELOAD():
-	make_maze()
-	reset_endpoint()
-	var color = maze_colors[ randi() % maze_colors.size() ]
-	BG.modulate = Color(color["bg"])
-	Map.modulate = Color(color["tile"])
 
 #+++++++++++++++++++++++++ MAZE SOLVING +++++++++++++++++++
 
