@@ -127,6 +127,8 @@ flat = false
 align = 1
 _sections_unfolded = [ "custom_fonts" ]
 
+[node name="EndHolder" type="Node" parent="." index="8"]
+
 [connection signal="pressed" from="GameGUI/Button" to="." method="_on_solve_pressed"]
 
 

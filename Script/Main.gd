@@ -69,10 +69,7 @@ func _ready():
 	 String(scr_size.x) + "  remainin: "+ String(scr_size.x - width*tile_size.x) +
 	"  margin: "+String(x_margin)+" "+String(y_margin) )
 	
-	set_end_points()
-	
-	#(re)make the maze,reset lines	
-	reload()
+	RELOAD()
 
 func _process(delta):
 	touch_input()
@@ -116,8 +113,8 @@ func make_maze():
 			current = stack.pop_back()
 		#yield(get_tree(), "idle_frame")
 
-func reload():
-	make_maze()
+func reset_endpoint():
+	set_end_points()
 	curr_touch_grid = start_point
 	Line.set_points([])
 	line_points.clear()
@@ -127,13 +124,11 @@ func reload():
 	find_solution(start_point)
 
 func set_end_points():
-	var sp = get_node("StartPoint")
-	var ep = get_node("EndPoint")
-	if sp:
-		sp.queue_free()
-		print("found and removed")
-	if ep:
-		ep.queue_free()
+	var end_holder = get_node("EndHolder")
+
+	for c in end_holder.get_children():
+		c.queue_free()
+	print("childrens killed")
 	
 	start_point = Vector2(randi() % int(width), randi() % int(height))
 	end_point = Vector2(randi() % int(width), randi() % int(height))
@@ -150,9 +145,13 @@ func set_end_points():
 	end_point_sprite.position = grid_to_pixel(end_point)
 	end_point_sprite.modulate = Color(0,1,0)
 	
-	add_child(start_point_sprite)
-	add_child(end_point_sprite)
-	reload()
+	end_holder.add_child(start_point_sprite)
+	end_holder.add_child(end_point_sprite)
+
+func RELOAD():
+	make_maze()
+	reset_endpoint()
+	
 
 #+++++++++++++++++++++++++ MAZE SOLVING +++++++++++++++++++
 
@@ -186,11 +185,10 @@ func backtracker(dic, start):
 	while curr != start:
 		SolveLine.add_point(grid_to_pixel(curr))
 		curr = dic[curr]
-		#yield(get_tree(), "idle_frame")
 	
 	print(SolveLine.get_point_count())
-	if SolveLine.get_point_count() < 150 and start == start_point:
-		reload()
+	if SolveLine.get_point_count() < 50 and start == start_point:
+		reset_endpoint()
 	
 	SolveLine.visible = false
 
@@ -250,7 +248,7 @@ func draw_line():
 		move_sfx.play()
 		
 	if curr_touch_grid == end_point:
-		reload()
+		RELOAD()
 
 func get_swipe_dir():
 	curr_touch_pos = get_viewport().get_mouse_position()
