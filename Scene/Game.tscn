@@ -22,9 +22,11 @@ y_margin = 32.0
 
 [node name="BG" parent="." index="0" instance=ExtResource( 2 )]
 
+modulate = Color( 0.156863, 0.0156863, 0.0156863, 1 )
+
 [node name="TileMap" type="TileMap" parent="." index="1"]
 
-modulate = Color( 0.378906, 0.883088, 1, 1 )
+modulate = Color( 1, 0.733333, 0.733333, 1 )
 material = SubResource( 1 )
 mode = 0
 tile_set = ExtResource( 3 )

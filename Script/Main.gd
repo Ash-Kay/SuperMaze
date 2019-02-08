@@ -18,6 +18,7 @@ var height = 40  # height of map (in tiles)
 var scr_size
 
 var move_sfx
+var maze_colors
 
 var curr_touch_grid = Vector2(0, 0)
 var base_touch_pos
@@ -35,6 +36,7 @@ var end_point
 onready var Map = $TileMap
 onready var Line = $Line2D
 onready var SolveLine = $SolvedPath
+onready var BG = $BG
 
 #+++++++++++++++++++++++++ READY AND PROCESS +++++++++++++++++++++++++
 
@@ -68,6 +70,10 @@ func _ready():
 	print("maze width: "+ String(width*tile_size.x) + "  screen width: "+
 	 String(scr_size.x) + "  remainin: "+ String(scr_size.x - width*tile_size.x) +
 	"  margin: "+String(x_margin)+" "+String(y_margin) )
+	
+	maze_colors = [{"tile": "60e1ff", "bg": "212b3b", "name": "darkblue"},
+			{"tile": "7dffcb", "bg": "14440d", "name": "green"},
+			{"tile": "ff6969", "bg": "280404", "name": "red"}]
 	
 	RELOAD()
 
@@ -151,7 +157,9 @@ func set_end_points():
 func RELOAD():
 	make_maze()
 	reset_endpoint()
-	
+	var color = maze_colors[ randi() % maze_colors.size() ]
+	BG.modulate = Color(color["bg"])
+	Map.modulate = Color(color["tile"])
 
 #+++++++++++++++++++++++++ MAZE SOLVING +++++++++++++++++++
 
@@ -187,7 +195,7 @@ func backtracker(dic, start):
 		curr = dic[curr]
 	
 	print(SolveLine.get_point_count())
-	if SolveLine.get_point_count() < 50 and start == start_point:
+	if SolveLine.get_point_count() < 100 and start == start_point:
 		reset_endpoint()
 	
 	SolveLine.visible = false
