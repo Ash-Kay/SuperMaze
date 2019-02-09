@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Script/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Scene/BG.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Fonts/MainTitle_Antonio_150.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Sprite/MainMenuMaze.png" type="Texture" id=4]
-[ext_resource path="res://Fonts/Antonio_90.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Fonts/MainTitle_Montserrat_120.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Sprite/Maze.png" type="Texture" id=4]
+[ext_resource path="res://Scene/Play2.png" type="Texture" id=5]
+[ext_resource path="res://Scene/Gear.png" type="Texture" id=6]
+[ext_resource path="res://Scene/AD.png" type="Texture" id=7]
+[ext_resource path="res://Fonts/Antonio_90.tres" type="DynamicFont" id=8]
 
 [node name="MainMenu" type="Node" index="0"]
 
@@ -33,7 +36,6 @@ _sections_unfolded = [ "Size Flags" ]
 
 [node name="MarginContainer" type="MarginContainer" parent="UI" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -57,7 +59,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 8.0
-margin_right = 956.0
+margin_right = 952.0
 margin_bottom = 1792.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -66,16 +68,18 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
-_sections_unfolded = [ "Rect", "Size Flags" ]
+_sections_unfolded = [ "Anchor", "Margin", "Rect", "Size Flags" ]
 
 [node name="Title" type="HBoxContainer" parent="UI/MarginContainer/VBox" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 948.0
-margin_bottom = 217.0
+margin_right = 944.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 0, 400 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -83,6 +87,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect" ]
 
 [node name="Label" type="Label" parent="UI/MarginContainer/VBox/Title" index="0"]
 
@@ -90,9 +95,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 154.0
-margin_right = 793.0
-margin_bottom = 217.0
+margin_left = 56.0
+margin_right = 888.0
+margin_bottom = 400.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -102,20 +107,22 @@ size_flags_vertical = 1
 custom_fonts/font = ExtResource( 3 )
 text = "SUPER MAZE"
 align = 1
+valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Size Flags", "custom_fonts" ]
+_sections_unfolded = [ "Rect", "Size Flags", "custom_fonts" ]
 
-[node name="MazeGraphic" type="HBoxContainer" parent="UI/MarginContainer/VBox" index="1"]
+[node name="Graphic" type="HBoxContainer" parent="UI/MarginContainer/VBox" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 221.0
-margin_right = 948.0
-margin_bottom = 1201.0
+margin_top = 404.0
+margin_right = 944.0
+margin_bottom = 1004.0
+rect_min_size = Vector2( 0, 600 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -123,34 +130,18 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Margin", "Rect", "Size Flags" ]
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/MarginContainer/VBox/MazeGraphic" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 948.0
-margin_bottom = 980.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Margin" ]
-
-[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/VBox/MazeGraphic/MarginContainer" index="0"]
+[node name="TextureRect" type="TextureRect" parent="UI/MarginContainer/VBox/Graphic" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 8.0
-margin_top = 4.0
-margin_right = 948.0
-margin_bottom = 984.0
+margin_left = 172.0
+margin_right = 772.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 600, 600 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -158,18 +149,20 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 4 )
-stretch_mode = 3
-_sections_unfolded = [ "Rect", "Size Flags" ]
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 
 [node name="PlayButton" type="HBoxContainer" parent="UI/MarginContainer/VBox" index="2"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 1205.0
-margin_right = 948.0
-margin_bottom = 1652.0
+margin_top = 1008.0
+margin_right = 944.0
+margin_bottom = 1687.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -179,16 +172,16 @@ size_flags_vertical = 3
 alignment = 1
 _sections_unfolded = [ "Anchor", "Size Flags" ]
 
-[node name="Play" type="Button" parent="UI/MarginContainer/VBox/PlayButton" index="0"]
+[node name="Play" type="TextureButton" parent="UI/MarginContainer/VBox/PlayButton" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 399.0
-margin_top = 155.0
-margin_right = 548.0
-margin_bottom = 291.0
+margin_left = 434.0
+margin_top = 295.0
+margin_right = 510.0
+margin_bottom = 383.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -196,24 +189,22 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 5 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Play"
-flat = false
-align = 1
-_sections_unfolded = [ "Anchor", "Margin", "Size Flags", "custom_fonts" ]
+texture_normal = ExtResource( 5 )
+_sections_unfolded = [ "Anchor", "Margin", "Size Flags", "Textures", "custom_fonts" ]
 
 [node name="OtherButtons" type="HBoxContainer" parent="UI/MarginContainer/VBox" index="3"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 1656.0
-margin_right = 948.0
+margin_top = 1691.0
+margin_right = 944.0
 margin_bottom = 1792.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -224,14 +215,14 @@ size_flags_vertical = 1
 alignment = 0
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="Settings" type="Button" parent="UI/MarginContainer/VBox/OtherButtons" index="0"]
+[node name="Settings" type="TextureButton" parent="UI/MarginContainer/VBox/OtherButtons" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 284.0
-margin_bottom = 136.0
+margin_right = 101.0
+margin_bottom = 101.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -239,15 +230,12 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 5 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Settings"
-flat = false
-align = 1
-_sections_unfolded = [ "custom_fonts" ]
+texture_normal = ExtResource( 6 )
+_sections_unfolded = [ "Margin", "Textures", "custom_fonts" ]
 
 [node name="Control" type="Control" parent="UI/MarginContainer/VBox/OtherButtons" index="1"]
 
@@ -255,9 +243,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 288.0
-margin_right = 849.0
-margin_bottom = 136.0
+margin_left = 105.0
+margin_right = 844.0
+margin_bottom = 101.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -266,15 +254,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="AD" type="Button" parent="UI/MarginContainer/VBox/OtherButtons" index="2"]
+[node name="AD" type="TextureButton" parent="UI/MarginContainer/VBox/OtherButtons" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 853.0
-margin_right = 948.0
-margin_bottom = 136.0
+margin_left = 848.0
+margin_right = 944.0
+margin_bottom = 101.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -282,15 +270,12 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 5 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "AD"
-flat = false
-align = 2
-_sections_unfolded = [ "Anchor", "Margin", "custom_fonts" ]
+texture_normal = ExtResource( 7 )
+_sections_unfolded = [ "Anchor", "Margin", "Textures", "custom_fonts" ]
 
 [node name="Popup" type="Popup" parent="UI" index="1"]
 
@@ -361,7 +346,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 8 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -404,7 +389,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 8 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null

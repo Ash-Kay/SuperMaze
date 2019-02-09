@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/MainMenuMaze.png-98b7b6b3af0dd8872f7a99a34860c7f9.stex"
+path="res://.import/light-bulb.svg-20431cecb4b3fd60c6ad14c05c287544.stex"
 
 [deps]
 
-source_file="res://Sprite/MainMenuMaze.png"
-dest_files=[ "res://.import/MainMenuMaze.png-98b7b6b3af0dd8872f7a99a34860c7f9.stex" ]
+source_file="res://Sprite/light-bulb.svg"
+dest_files=[ "res://.import/light-bulb.svg-20431cecb4b3fd60c6ad14c05c287544.stex" ]
 
 [params]
 
@@ -26,4 +26,4 @@ process/HDR_as_SRGB=false
 stream=false
 size_limit=0
 detect_3d=true
-svg/scale=0.5
+svg/scale=0.2

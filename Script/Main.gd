@@ -37,7 +37,7 @@ onready var Map = $TileMap
 onready var Line = $Line2D
 onready var SolveLine = $SolvedPath
 onready var BG = $BG
-onready var HintCount = get_node("GameGUI/Container/HintCount")
+onready var HintCount = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/HintCount")
 
 #+++++++++++++++++++++++++ READY AND PROCESS +++++++++++++++++++++++++
 
