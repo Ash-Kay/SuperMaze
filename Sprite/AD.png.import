@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Play.svg-8ed220a4771535695a453d8e1a538392.stex"
+path="res://.import/AD.png-f4717e1a590b8482950e682f44282b6d.stex"
 
 [deps]
 
-source_file="res://Sprite/Play.svg"
-dest_files=[ "res://.import/Play.svg-8ed220a4771535695a453d8e1a538392.stex" ]
+source_file="res://Sprite/AD.png"
+dest_files=[ "res://.import/AD.png-f4717e1a590b8482950e682f44282b6d.stex" ]
 
 [params]
 
@@ -26,4 +26,4 @@ process/HDR_as_SRGB=false
 stream=false
 size_limit=0
 detect_3d=true
-svg/scale=0.7
+svg/scale=1.0

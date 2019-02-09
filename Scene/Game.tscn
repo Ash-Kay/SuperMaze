@@ -5,9 +5,8 @@
 [ext_resource path="res://Sprite/TileSet.tres" type="TileSet" id=3]
 [ext_resource path="res://Audio/Stellardrone - Light Years - 08 Ultra Deep Field.ogg" type="AudioStream" id=4]
 [ext_resource path="res://Audio/click_cc0.wav" type="AudioStream" id=5]
-[ext_resource path="res://Fonts/Antonio_90.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Fonts/Montserrat_90.tres" type="DynamicFont" id=6]
 [ext_resource path="res://Sprite/light-bulb.svg" type="Texture" id=7]
-
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -15,7 +14,7 @@ render_priority = 0
 blend_mode = 1
 light_mode = 0
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node" index="0"]
 
 script = ExtResource( 1 )
 x_margin = 0.0
@@ -89,6 +88,7 @@ bus = "Master"
 
 [node name="GameGUI" type="Control" parent="." index="6"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -103,19 +103,21 @@ _sections_unfolded = [ "Anchor", "Margin" ]
 
 [node name="MarginContainer" type="MarginContainer" parent="GameGUI" index="0"]
 
-anchor_left = 1.0
+anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
-margin_left = -153.0
-margin_bottom = 130.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -16.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-_sections_unfolded = [ "Anchor", "Margin" ]
+_sections_unfolded = [ "Margin" ]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameGUI/MarginContainer" index="0"]
 
@@ -124,15 +126,15 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 8.0
-margin_right = 153.0
-margin_bottom = 130.0
+margin_right = 1048.0
+margin_bottom = 1888.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-alignment = 2
+alignment = 0
 _sections_unfolded = [ "Anchor", "Margin" ]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GameGUI/MarginContainer/VBoxContainer" index="0"]
@@ -141,8 +143,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 145.0
-margin_bottom = 130.0
+margin_right = 1040.0
+margin_bottom = 111.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -158,8 +160,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 39.0
-margin_bottom = 130.0
+margin_left = 882.0
+margin_right = 934.0
+margin_bottom = 111.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -180,9 +183,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 43.0
-margin_right = 145.0
-margin_bottom = 130.0
+margin_left = 938.0
+margin_right = 1040.0
+margin_bottom = 111.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -195,7 +198,7 @@ enabled_focus_mode = 2
 shortcut = null
 group = null
 texture_normal = ExtResource( 7 )
-_sections_unfolded = [ "Margin", "Size Flags", "custom_fonts" ]
+_sections_unfolded = [ "Margin", "Rect", "Size Flags", "custom_fonts" ]
 
 [node name="EndHolder" type="Node" parent="." index="7"]
 
