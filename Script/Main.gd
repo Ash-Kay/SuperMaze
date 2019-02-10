@@ -332,3 +332,9 @@ func _on_PlayPause_pressed():
 
 func _on_PauseMenu_popup_hide():
 	PlayPauseButton.pressed = false
+
+func _on_music_toggled(button_pressed):
+	GameManager.set_music_state(button_pressed)
+
+func _on_SFX_toggled(button_pressed):
+	GameManager.set_sfx_state(button_pressed)
