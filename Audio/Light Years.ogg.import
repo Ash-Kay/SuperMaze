@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Light Years.ogg-b2ea07c2f36d54489af1b91af101307a.oggstr"
+
+[deps]
+
+source_file="res://Audio/Light Years.ogg"
+dest_files=[ "res://.import/Light Years.ogg-b2ea07c2f36d54489af1b91af101307a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

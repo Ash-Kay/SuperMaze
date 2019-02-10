@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Comet Halley.ogg-8c92d3b3fdca08239dcb5dd96e49b7ee.oggstr"
+
+[deps]
+
+source_file="res://Audio/Comet Halley.ogg"
+dest_files=[ "res://.import/Comet Halley.ogg-8c92d3b3fdca08239dcb5dd96e49b7ee.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

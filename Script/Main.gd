@@ -38,6 +38,8 @@ onready var Line = $Line2D
 onready var SolveLine = $SolvedPath
 onready var BG = $BG
 onready var HintCount = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/HintCount")
+onready var PauseMenu = get_node("GameGUI/PauseMenu")
+onready var PlayPauseButton = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/PlayPause")
 
 #+++++++++++++++++++++++++ READY AND PROCESS +++++++++++++++++++++++++
 
@@ -151,7 +153,6 @@ func set_end_points():
 
 	for c in end_holder.get_children():
 		c.queue_free()
-	print("childrens killed")
 	
 	start_point = Vector2(randi() % int(width), randi() % int(height))
 	end_point = Vector2(randi() % int(width), randi() % int(height))
@@ -161,7 +162,7 @@ func set_end_points():
 	var start_point_sprite = point_scene.instance()
 	start_point_sprite.name = "StartPoint"
 	start_point_sprite.position = grid_to_pixel(start_point)
-	start_point_sprite.modulate = Color(1,0,0)
+	start_point_sprite.modulate = Color(1,1,1)
 	
 	var end_point_sprite = point_scene.instance()
 	end_point_sprite.name = "EndPoint"
@@ -268,7 +269,8 @@ func draw_line():
 	else:
 		Line.add_point(grid_to_pixel(curr_touch_grid))
 		line_points.append(curr_touch_grid)
-		move_sfx.play()
+		if GameManager.sfx_state:
+			move_sfx.play()
 		
 	if curr_touch_grid == end_point:
 		RELOAD()
@@ -324,3 +326,9 @@ func _on_solve_pressed():
 		SolveLine.visible = true
 		GameManager.use_hint()
 		GameManager.update_hint_ui(HintCount)
+
+func _on_PlayPause_pressed():
+	PauseMenu.popup()
+
+func _on_PauseMenu_popup_hide():
+	PlayPauseButton.pressed = false

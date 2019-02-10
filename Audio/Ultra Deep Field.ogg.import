@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Ultra Deep Field.ogg-7e5af5951ff6164b37e39346f2c262bb.oggstr"
+
+[deps]
+
+source_file="res://Audio/Ultra Deep Field.ogg"
+dest_files=[ "res://.import/Ultra Deep Field.ogg-7e5af5951ff6164b37e39346f2c262bb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

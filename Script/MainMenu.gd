@@ -14,9 +14,9 @@ func _on_settings_pressed():
 	SettingPopup.popup()
 
 func _on_music_toggled(button_pressed):
-	print("music: "+String(button_pressed))
+	GameManager.set_music_state(button_pressed)
 	pass # replace with function body
 
 func _on_SFX_toggled(button_pressed):
-	print("sfx: "+String(button_pressed))
+	GameManager.set_sfx_state(button_pressed)
 	pass # replace with function body

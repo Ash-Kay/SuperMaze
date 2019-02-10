@@ -12,7 +12,7 @@
 [ext_resource path="res://Sprite/sfx-on.svg" type="Texture" id=10]
 [ext_resource path="res://Sprite/sfx-off.svg" type="Texture" id=11]
 
-[node name="MainMenu" type="Node" index="0"]
+[node name="MainMenu" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -39,6 +39,7 @@ _sections_unfolded = [ "Size Flags" ]
 
 [node name="MarginContainer" type="MarginContainer" parent="UI" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -57,6 +58,7 @@ _sections_unfolded = [ "Margin" ]
 
 [node name="VBox" type="VBoxContainer" parent="UI/MarginContainer" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -281,7 +283,6 @@ _sections_unfolded = [ "Anchor", "Margin", "Textures", "custom_fonts" ]
 
 [node name="Popup" type="Popup" parent="UI" index="1"]
 
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -297,7 +298,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 popup_exclusive = false
-_sections_unfolded = [ "Rect", "Size Flags" ]
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect", "Size Flags" ]
 
 [node name="ColorRect" type="ColorRect" parent="UI/Popup" index="0"]
 
@@ -347,7 +348,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
-_sections_unfolded = [ "Anchor" ]
+_sections_unfolded = [ "Anchor", "Margin" ]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Popup/MarginContainer/VBoxContainer" index="0"]
 

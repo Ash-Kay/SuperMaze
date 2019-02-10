@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Airglow.ogg-beee5389cb51d19ec64f1b3502201585.oggstr"
+
+[deps]
+
+source_file="res://Audio/Airglow.ogg"
+dest_files=[ "res://.import/Airglow.ogg-beee5389cb51d19ec64f1b3502201585.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
