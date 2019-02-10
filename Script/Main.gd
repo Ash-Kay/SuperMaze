@@ -92,8 +92,8 @@ func RELOAD():
 	change_color()
 
 func change_color():
-#	var color = maze_colors[ randi() % maze_colors.size() ]
-	var color = maze_colors[3]
+	var color = maze_colors[ randi() % maze_colors.size() ]
+#	var color = maze_colors[3]
 	BG.modulate = Color(color["bg"])
 	Map.modulate = Color(color["tile"])
 

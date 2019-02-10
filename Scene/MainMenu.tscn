@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Script/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Scene/BG.tscn" type="PackedScene" id=2]
@@ -7,9 +7,12 @@
 [ext_resource path="res://Sprite/Play2.png" type="Texture" id=5]
 [ext_resource path="res://Sprite/Gear.png" type="Texture" id=6]
 [ext_resource path="res://Sprite/AD.png" type="Texture" id=7]
-[ext_resource path="res://Fonts/Antonio_90.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Sprite/music_on.svg" type="Texture" id=8]
+[ext_resource path="res://Sprite/music_off.svg" type="Texture" id=9]
+[ext_resource path="res://Sprite/sfx-on.svg" type="Texture" id=10]
+[ext_resource path="res://Sprite/sfx-off.svg" type="Texture" id=11]
 
-[node name="MainMenu" type="Node"]
+[node name="MainMenu" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
@@ -236,7 +239,7 @@ group = null
 texture_normal = ExtResource( 6 )
 _sections_unfolded = [ "Margin", "Textures", "custom_fonts" ]
 
-[node name="Control" type="Control" parent="UI/MarginContainer/VBox/OtherButtons" index="1"]
+[node name="Space" type="Control" parent="UI/MarginContainer/VBox/OtherButtons" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -278,14 +281,15 @@ _sections_unfolded = [ "Anchor", "Margin", "Textures", "custom_fonts" ]
 
 [node name="Popup" type="Popup" parent="UI" index="1"]
 
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -408.0
-margin_top = -290.0
+margin_top = -300.0
 margin_right = 408.0
-margin_bottom = 291.0
+margin_bottom = 320.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -295,31 +299,65 @@ size_flags_vertical = 1
 popup_exclusive = false
 _sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Popup" index="0"]
+[node name="ColorRect" type="ColorRect" parent="UI/Popup" index="0"]
 
 anchor_left = 0.0
-anchor_top = 0.5
+anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.5
-margin_top = -68.0
-margin_bottom = 68.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0.128906, 0.128906, 0.128906, 0.911608 )
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Popup" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 64.0
+margin_top = 64.0
+margin_right = -64.0
+margin_bottom = -64.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Margin" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Popup/MarginContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 8.0
+margin_right = 688.0
+margin_bottom = 492.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-alignment = 0
+alignment = 1
 _sections_unfolded = [ "Anchor" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Popup/VBoxContainer" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Popup/MarginContainer/VBoxContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 816.0
-margin_bottom = 136.0
+margin_top = 162.0
+margin_right = 680.0
+margin_bottom = 330.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -327,15 +365,16 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
+_sections_unfolded = [ "Margin" ]
 
-[node name="Music" type="Button" parent="UI/Popup/VBoxContainer/HBoxContainer" index="0"]
+[node name="Music" type="TextureButton" parent="UI/Popup/MarginContainer/VBoxContainer/HBoxContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 208.0
-margin_bottom = 136.0
+margin_right = 168.0
+margin_bottom = 168.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -343,42 +382,40 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 8 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Music"
-flat = false
-align = 1
-_sections_unfolded = [ "custom_fonts" ]
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+_sections_unfolded = [ "Margin", "Textures", "custom_fonts" ]
 
-[node name="Space" type="Control" parent="UI/Popup/VBoxContainer/HBoxContainer" index="1"]
+[node name="Space" type="Control" parent="UI/Popup/MarginContainer/VBoxContainer/HBoxContainer" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 212.0
-margin_right = 693.0
-margin_bottom = 136.0
+margin_left = 172.0
+margin_right = 508.0
+margin_bottom = 168.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-_sections_unfolded = [ "Size Flags" ]
+_sections_unfolded = [ "Margin", "Size Flags" ]
 
-[node name="SFX" type="Button" parent="UI/Popup/VBoxContainer/HBoxContainer" index="2"]
+[node name="SFX" type="TextureButton" parent="UI/Popup/MarginContainer/VBoxContainer/HBoxContainer" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 697.0
-margin_right = 816.0
-margin_bottom = 136.0
+margin_left = 512.0
+margin_right = 680.0
+margin_bottom = 168.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -386,18 +423,20 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 8 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "SFX"
-flat = false
-align = 2
-_sections_unfolded = [ "Anchor", "Margin", "custom_fonts" ]
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 11 )
+_sections_unfolded = [ "Anchor", "Margin", "Textures", "custom_fonts" ]
 
 [connection signal="pressed" from="UI/MarginContainer/VBox/PlayButton/Play" to="." method="_on_play_pressed"]
 
 [connection signal="pressed" from="UI/MarginContainer/VBox/OtherButtons/Settings" to="." method="_on_settings_pressed"]
+
+[connection signal="toggled" from="UI/Popup/MarginContainer/VBoxContainer/HBoxContainer/Music" to="." method="_on_music_toggled"]
+
+[connection signal="toggled" from="UI/Popup/MarginContainer/VBoxContainer/HBoxContainer/SFX" to="." method="_on_SFX_toggled"]
 
 
