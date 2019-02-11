@@ -4,12 +4,25 @@ var hint_count = 5
 var music_state = true
 var sfx_state = true
 var BGMusic
-var music_path = ["res://Audio/Airglow.ogg",
-"res://Audio/Cepheid.ogg","res://Audio/Comet Halley.ogg",
-"res://Audio/Eternity (Reprise).ogg","res://Audio/Eternity.ogg",
-"res://Audio/In Time.ogg","res://Audio/Light Years.ogg",
-"res://Audio/Messier 45.ogg","res://Audio/Red Giant.ogg",
-"res://Audio/Ultra Deep Field.ogg"]
+var light_color
+var dark_color
+
+var music_path = [	"res://Audio/Airglow.ogg",
+					"res://Audio/Cepheid.ogg","res://Audio/Comet Halley.ogg",
+					"res://Audio/Eternity (Reprise).ogg","res://Audio/Eternity.ogg",
+					"res://Audio/In Time.ogg","res://Audio/Light Years.ogg",
+					"res://Audio/Messier 45.ogg","res://Audio/Red Giant.ogg",
+					"res://Audio/Ultra Deep Field.ogg"]
+
+
+var color_palette = [{"light": "60e1ff", "dark": "212b3b", "name": "darkblue"},
+					{"light": "ff971d", "dark": "1a2c05", "name": "test"},
+					{"light": "00cefc", "dark": "003642", "name": "blue"},
+					{"light": "D1C4E9", "dark": "0e0033", "name": "lightvoilet"},
+					{"light": "6cffe6", "dark": "083339", "name": "tealgreen"},
+					{"light": "f73838", "dark": "300000", "name": "red"},
+					{"light": "ff1d77", "dark": "2c051b", "name": "pink+marron"},
+					{"light": "7171fc", "dark": "05052c", "name": "voilet"}]
 
 func _ready():
 	randomize()
@@ -18,6 +31,12 @@ func _ready():
 	add_child(BGMusic)
 	
 	play_rand_music()
+	select_palette()
+
+func select_palette():
+	var rand_color_index = randi() % color_palette.size()
+	light_color =  color_palette[ rand_color_index ]["light"]
+	dark_color =  color_palette[ rand_color_index ]["dark"]
 
 func hint_inc(amt):
 	hint_count += amt

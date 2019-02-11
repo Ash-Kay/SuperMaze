@@ -18,7 +18,6 @@ var height = 40  # height of map (in tiles)
 var scr_size
 
 var move_sfx
-var maze_colors
 
 var curr_touch_grid = Vector2(0, 0)
 var base_touch_pos
@@ -44,7 +43,6 @@ onready var PlayPauseButton = get_node("GameGUI/MarginContainer/VBoxContainer/HB
 #+++++++++++++++++++++++++ READY AND PROCESS +++++++++++++++++++++++++
 
 func _ready():
-	randomize()
 	
 	cool_down_timer = Timer.new()
 	cool_down_timer.set_one_shot(true)
@@ -74,13 +72,6 @@ func _ready():
 	 String(scr_size.x) + "  remainin: "+ String(scr_size.x - width*tile_size.x) +
 	"  margin: "+String(x_margin)+" "+String(y_margin) )
 	
-	maze_colors = [{"tile": "60e1ff", "bg": "212b3b", "name": "darkblue"},
-			{"tile": "6cffe6", "bg": "083339", "name": "green"},
-			{"tile": "d48e8e", "bg": "3d0707", "name": "darkred"},
-			{"tile": "ff1d77", "bg": "2c051b", "name": "pink"},
-			{"tile": "ff971d", "bg": "1a2c05", "name": "yellowgreen"},
-			{"tile": "0000ad", "bg": "05052c", "name": "voilet"}]
-	
 	RELOAD()
 
 func _process(delta):
@@ -92,12 +83,11 @@ func RELOAD():
 	make_maze()
 	reset_endpoint()
 	change_color()
+	GameManager.select_palette()
 
 func change_color():
-	var color = maze_colors[ randi() % maze_colors.size() ]
-#	var color = maze_colors[3]
-	BG.modulate = Color(color["bg"])
-	Map.modulate = Color(color["tile"])
+	BG.modulate = Color(GameManager.dark_color)
+	Map.modulate = Color(GameManager.light_color)
 
 #+++++++++++++++++++++++++ MAZE GENRATION +++++++++++++++++++++++++
 

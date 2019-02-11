@@ -13,7 +13,7 @@
 [ext_resource path="res://Sprite/sfx-on.svg" type="Texture" id=11]
 [ext_resource path="res://Sprite/sfx-off.svg" type="Texture" id=12]
 
-[node name="MainMenu" type="Node" index="0"]
+[node name="MainMenu" type="Node"]
 
 script = ExtResource( 1 )
 
