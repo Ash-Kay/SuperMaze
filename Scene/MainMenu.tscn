@@ -19,8 +19,8 @@ script = ExtResource( 1 )
 
 [node name="BG" parent="." index="0" instance=ExtResource( 2 )]
 
-position = Vector2( 530, 1000 )
-scale = Vector2( 483.782, 501.248 )
+position = Vector2( 1464.2, 1647.92 )
+scale = Vector2( 950.884, 825.207 )
 
 [node name="UI" type="Control" parent="." index="1"]
 

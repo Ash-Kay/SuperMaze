@@ -19,7 +19,7 @@ render_priority = 0
 blend_mode = 1
 light_mode = 0
 
-[node name="Node" type="Node" index="0"]
+[node name="Node" type="Node"]
 
 script = ExtResource( 1 )
 x_margin = 0.0
@@ -28,6 +28,8 @@ y_margin = 32.0
 [node name="BG" parent="." index="0" instance=ExtResource( 2 )]
 
 modulate = Color( 0.0196078, 0.0196078, 0.172549, 1 )
+position = Vector2( 1278.48, 1847.04 )
+scale = Vector2( 863.124, 924.518 )
 
 [node name="TileMap" type="TileMap" parent="." index="1"]
 
