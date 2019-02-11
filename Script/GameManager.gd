@@ -6,6 +6,9 @@ var sfx_state = true
 var BGMusic
 var light_color
 var dark_color
+var save_data = {"hint": 5}
+var savegame = File.new()
+var save_path = "user://savegame.bin"
 
 var music_path = [	"res://Audio/Airglow.ogg",
 					"res://Audio/Cepheid.ogg","res://Audio/Comet Halley.ogg",
@@ -27,6 +30,8 @@ var color_palette = [{"light": "60e1ff", "dark": "212b3b", "name": "darkblue"},
 func _ready():
 	randomize()
 	
+	check_savegame()
+	
 	BGMusic = load("res://Scene/BGMusic.tscn").instance()
 	add_child(BGMusic)
 	
@@ -37,6 +42,13 @@ func select_palette():
 	var rand_color_index = randi() % color_palette.size()
 	light_color =  color_palette[ rand_color_index ]["light"]
 	dark_color =  color_palette[ rand_color_index ]["dark"]
+
+func check_savegame():
+	if not savegame.file_exists(save_path):
+		savegame.open_encrypted_with_pass(save_path, File.WRITE, OS.get_unique_ID())
+		savegame.store_var(save_data)
+		print(Sting(save_data))
+		savegame.close()
 
 func hint_inc(amt):
 	hint_count += amt
