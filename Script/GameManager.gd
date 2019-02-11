@@ -30,7 +30,7 @@ var color_palette = [{"light": "60e1ff", "dark": "212b3b", "name": "darkblue"},
 func _ready():
 	randomize()
 	
-	check_savegame()
+#	check_savegame()
 	
 	BGMusic = load("res://Scene/BGMusic.tscn").instance()
 	add_child(BGMusic)
@@ -44,11 +44,20 @@ func select_palette():
 	dark_color =  color_palette[ rand_color_index ]["dark"]
 
 func check_savegame():
+	var id
+	if OS.get_name() == "Windows":
+		id = "123"
+	else:
+		id = OS.get_unique_ID()
+	
 	if not savegame.file_exists(save_path):
-		savegame.open_encrypted_with_pass(save_path, File.WRITE, OS.get_unique_ID())
+		savegame.open_encrypted_with_pass(save_path, File.WRITE, id)
 		savegame.store_var(save_data)
-		print(Sting(save_data))
 		savegame.close()
+	else:
+		savegame.open_encrypted_with_pass(save_path, File.READ, id)
+		savegame.store_var(save_data)
+		print( savegame.get_as_text() )
 
 func hint_inc(amt):
 	hint_count += amt
