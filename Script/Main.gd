@@ -61,7 +61,12 @@ func _ready():
 	tile_size = Map.cell_size
 	
 	if OS.get_name() != "Windows":
-		scr_size = OS.window_size
+		var actual_res = OS.window_size
+		if actual_res.x < 1080 or actual_res.y < 1920 :
+			scr_size = Vector2(1080,1920)
+		else:
+			var factor = actual_res.x/1080
+			scr_size = Vector2(1080, floor(actual_res.y/factor))
 	else:
 		scr_size = Vector2(1080,1920)#for TEST ONLY
 	
