@@ -39,16 +39,21 @@ onready var BG = $BG
 onready var HintCount = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/HintCount")
 onready var PauseMenu = get_node("GameGUI/PauseMenu")
 onready var PlayPauseButton = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/PlayPause")
+onready var PauseMenuBorder = get_node("GameGUI/PauseMenu/Border")
+onready var PauseMenuInner = get_node("GameGUI/PauseMenu/Border/MarginContainer/Inner")
+onready var MusicButton = get_node("GameGUI/PauseMenu/MarginContainer/VBoxContainer/SoundControl/Music")
+onready var SFXButton = get_node("GameGUI/PauseMenu/MarginContainer/VBoxContainer/SoundControl/SFX")
 
 #+++++++++++++++++++++++++ READY AND PROCESS +++++++++++++++++++++++++
 
 func _ready():
 	
-	cool_down_timer = Timer.new()
-	cool_down_timer.set_one_shot(true)
-	cool_down_timer.set_wait_time(0.05)
-	cool_down_timer.connect("timeout", self, "on_timeout_complete")
-	add_child(cool_down_timer)
+	get_tree().set_quit_on_go_back(false)	#for android ios
+	get_tree().set_auto_accept_quit(false)	#for windows
+	
+	add_cooldown_timer()
+	
+	set_sound_state()
 	
 	move_sfx = $Move
 	
@@ -88,6 +93,13 @@ func RELOAD():
 func change_color():
 	BG.modulate = Color(GameManager.dark_color)
 	Map.modulate = Color(GameManager.light_color)
+	
+	PauseMenuInner.color = Color("be"+GameManager.dark_color)
+	PauseMenuBorder.color = Color("be"+GameManager.light_color)
+
+func set_sound_state():
+	MusicButton.pressed = !GameManager.music_state
+	SFXButton.pressed = !GameManager.sfx_state
 
 #+++++++++++++++++++++++++ MAZE GENRATION +++++++++++++++++++++++++
 
@@ -309,6 +321,8 @@ func get_swipe_norm(ctg):
 				return Vector2(round(dir.x),0)
 	return false
 
+#+++++++++++++++++++++++++ BUTTON PRESS +++++++++++++++++++++++++
+
 func _on_solve_pressed():
 	if GameManager.hint_count > 0:
 		clear_solve_line()
@@ -320,6 +334,12 @@ func _on_solve_pressed():
 func _on_PlayPause_pressed():
 	PauseMenu.popup()
 
+func _on_ClosePauseMenu_pressed():
+	PauseMenu.hide()
+
+func _on_GotoMainMenu_pressed():
+	get_tree().change_scene("res://Scene/MainMenu.tscn")
+
 func _on_PauseMenu_popup_hide():
 	PlayPauseButton.pressed = false
 
@@ -328,3 +348,22 @@ func _on_music_toggled(button_pressed):
 
 func _on_SFX_toggled(button_pressed):
 	GameManager.set_sfx_state(button_pressed)
+
+#+++++++++++++++++++++++++ OTHERS +++++++++++++++++++++++++
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST:
+		PauseMenu.popup()
+		PlayPauseButton.pressed = true
+		#get_tree().change_scene("res://Scene/MainMenu.tscn")
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		PauseMenu.popup()
+		PlayPauseButton.pressed = true
+
+func add_cooldown_timer():
+	cool_down_timer = Timer.new()
+	cool_down_timer.set_one_shot(true)
+	cool_down_timer.set_wait_time(0.05)
+	cool_down_timer.connect("timeout", self, "on_timeout_complete")
+	add_child(cool_down_timer)
+

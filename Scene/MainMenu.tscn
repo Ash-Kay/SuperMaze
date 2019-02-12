@@ -13,7 +13,7 @@
 [ext_resource path="res://Sprite/sfx-on.svg" type="Texture" id=11]
 [ext_resource path="res://Sprite/sfx-off.svg" type="Texture" id=12]
 
-[node name="MainMenu" type="Node" index="0"]
+[node name="MainMenu" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -326,16 +326,15 @@ _sections_unfolded = [ "Anchor", "Margin", "Textures", "custom_fonts" ]
 
 [node name="Popup" type="Popup" parent="UI" index="1"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -408.0
-margin_top = -300.0
+margin_top = -353.0
 margin_right = 408.0
-margin_bottom = 320.0
+margin_bottom = 367.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -345,7 +344,7 @@ size_flags_vertical = 1
 popup_exclusive = false
 _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect", "Size Flags" ]
 
-[node name="ColorRect" type="ColorRect" parent="UI/Popup" index="0"]
+[node name="Border" type="ColorRect" parent="UI/Popup" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -358,6 +357,42 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 color = Color( 0.128906, 0.128906, 0.128906, 0.911608 )
+_sections_unfolded = [ "Margin" ]
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Popup/Border" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -16.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Margin" ]
+
+[node name="Inner" type="ColorRect" parent="UI/Popup/Border/MarginContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 8.0
+margin_right = 784.0
+margin_bottom = 688.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0.234375, 0.234375, 0.234375, 0.745098 )
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/Popup" index="1"]
 
@@ -385,7 +420,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 8.0
 margin_right = 688.0
-margin_bottom = 492.0
+margin_bottom = 592.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -401,9 +436,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 162.0
+margin_top = 212.0
 margin_right = 680.0
-margin_bottom = 330.0
+margin_bottom = 380.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1

@@ -6,12 +6,19 @@ var sfx_state = true
 var BGMusic
 var light_color
 var dark_color
+
 var save_data = {"hint": 5}
-var savegame = File.new()
-var save_path = "user://savegame.bin"
+var config_data = {"firstrun": true}
+
+var save_game_file = File.new()
+var config_file = ConfigFile.new()
+
+const SAVE_PATH = "user://savegame.bin"
+const CONFIG_PATH = "user://settings.cfg"
+var KEY
 
 var music_path = [	"res://Audio/Airglow.ogg",
-					"res://Audio/Cepheid.ogg","res://Audio/Comet Halley.ogg",
+					"res://Audio/CepheKEY.ogg","res://Audio/Comet Halley.ogg",
 					"res://Audio/Eternity (Reprise).ogg","res://Audio/Eternity.ogg",
 					"res://Audio/In Time.ogg","res://Audio/Light Years.ogg",
 					"res://Audio/Messier 45.ogg","res://Audio/Red Giant.ogg",
@@ -30,7 +37,13 @@ var color_palette = [{"light": "60e1ff", "dark": "212b3b", "name": "darkblue"},
 func _ready():
 	randomize()
 	
-#	check_savegame()
+	if OS.get_name() == "Windows":
+		KEY = "123"
+	else:
+		KEY = OS.get_unique_id()
+	
+	save_game()
+	check_savegame()
 	
 	BGMusic = load("res://Scene/BGMusic.tscn").instance()
 	add_child(BGMusic)
@@ -43,21 +56,27 @@ func select_palette():
 	light_color =  color_palette[ rand_color_index ]["light"]
 	dark_color =  color_palette[ rand_color_index ]["dark"]
 
+#+++++++++++++++++++++++++ SAVE DATA ++++++++++++++++++++++++++++++++
+
 func check_savegame():
-	var id
-	if OS.get_name() == "Windows":
-		id = "123"
-	else:
-		id = OS.get_unique_ID()
 	
-	if not savegame.file_exists(save_path):
-		savegame.open_encrypted_with_pass(save_path, File.WRITE, id)
-		savegame.store_var(save_data)
-		savegame.close()
+	if not save_game_file.file_exists(SAVE_PATH):
+		save_game_file.open_encrypted_with_pass(SAVE_PATH, File.WRITE, KEY)
+		save_game_file.store_var(to_json(save_data))
+		save_game_file.close()
 	else:
-		savegame.open_encrypted_with_pass(save_path, File.READ, id)
-		savegame.store_var(save_data)
-		print( savegame.get_as_text() )
+		save_game_file.open_encrypted_with_pass(SAVE_PATH, File.READ, KEY)
+		save_data = save_game_file.get_var()
+		print( save_data )
+		save_game_file.close()
+
+func save_game():
+	if save_game_file.file_exists(SAVE_PATH):
+		save_game_file.open_encrypted_with_pass(SAVE_PATH, File.WRITE, KEY)
+		save_game_file.store_var(to_json(save_data))
+		save_game_file.close()
+
+#++++++++++++++++++++++ GAME CONTROL AND SIGNALS +++++++++++++++++++++++++++++++
 
 func hint_inc(amt):
 	hint_count += amt
@@ -78,7 +97,6 @@ func set_music_state(state):
 	print("GM music : "+String(music_state))
 
 func set_sfx_state(state):
-	#emmit to sfx source
 	sfx_state = !state
 	print("GM sfx : "+String(sfx_state))
 
