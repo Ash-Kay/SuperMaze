@@ -1,13 +1,12 @@
 extends Node
 
-var hint_count = 5
 var music_state = true
 var sfx_state = true
 var BGMusic
 var light_color
 var dark_color
 
-var save_data = {"hint": 5}
+var save_data = {"hint": 5, "rewardtime": 0}
 var config_data = {"firstrun": true}
 
 var save_game_file = File.new()
@@ -41,15 +40,19 @@ func _ready():
 		KEY = "123"
 	else:
 		KEY = OS.get_unique_id()
-	
-	save_game()
+		
 	check_savegame()
+	check_daily_reward()
 	
 	BGMusic = load("res://Scene/BGMusic.tscn").instance()
 	add_child(BGMusic)
 	
 	play_rand_music()
 	select_palette()
+	
+#	print(String(OS.get_datetime()))
+#	print(String(OS.get_unix_time()))
+	
 
 func select_palette():
 	var rand_color_index = randi() % color_palette.size()
@@ -66,7 +69,7 @@ func check_savegame():
 		save_game_file.close()
 	else:
 		save_game_file.open_encrypted_with_pass(SAVE_PATH, File.READ, KEY)
-		save_data = save_game_file.get_var()
+		save_data = parse_json( save_game_file.get_var() )
 		print( save_data )
 		save_game_file.close()
 
@@ -76,17 +79,28 @@ func save_game():
 		save_game_file.store_var(to_json(save_data))
 		save_game_file.close()
 
+#+++++++++++++++++++++++++++++++ OTHERS +++++++++++++++++++++++++++++++++++
+
+func check_daily_reward():
+	if OS.get_unix_time() - save_data["rewardtime"] >= 86400:
+		save_data["rewardtime"] = OS.get_unix_time()
+		save_data["hint"] += randi() % 3 + 3
+		save_game()
+
 #++++++++++++++++++++++ GAME CONTROL AND SIGNALS +++++++++++++++++++++++++++++++
 
 func hint_inc(amt):
-	hint_count += amt
+	save_data["hint"] += amt
+	save_game()
 
 func use_hint():
-	if hint_count > 0: 
-		hint_count -= 1
+	if save_data["hint"] > 0: 
+		save_data["hint"] -= 1
+		save_game()
 
 func update_hint_ui(label):
-	label.text = String(hint_count)
+#	label.text = String(hint_count)
+	label.text = String(save_data["hint"])
 
 func set_music_state(state):
 	music_state = !state

@@ -1,19 +1,20 @@
 extends Node
 
-var GameScene
-var SettingPopup
+var GameScene = "res://Scene/Game.tscn"
 
 onready var UInode = $UI
 onready var BG = $BG
+onready var SettingPopup = get_node("UI/Popup")
+onready var CreditsPopup = get_node("UI/Credits")
 onready var PauseMenuBorder = get_node("UI/Popup/Border")
 onready var PauseMenuInner = get_node("UI/Popup/Border/MarginContainer/Inner")
+onready var CreditsBorder = get_node("UI/Credits/Border")
+onready var CreditsInner = get_node("UI/Credits/Border/MarginContainer/Inner")
 onready var MusicButton = get_node("UI/Popup/MarginContainer/VBoxContainer/HBoxContainer/Music")
 onready var SFXButton = get_node("UI/Popup/MarginContainer/VBoxContainer/HBoxContainer/SFX")
 
 func _ready():
 	get_tree().set_quit_on_go_back(true)
-	GameScene = "res://Scene/Game.tscn"
-	SettingPopup = get_node("UI/Popup")
 	set_MainMenu_color()
 	set_sound_state()
 
@@ -23,6 +24,9 @@ func set_MainMenu_color():
 	
 	PauseMenuInner.color = Color("be"+GameManager.dark_color)
 	PauseMenuBorder.color = Color("be"+GameManager.light_color)
+	
+	CreditsInner.color = Color("be"+GameManager.dark_color)
+	CreditsBorder.color = Color("be"+GameManager.light_color)
 
 #++++++++++++++++++++++++ SIGNALS +++++++++++++++++++++++++++++++
 
@@ -38,9 +42,12 @@ func _on_music_toggled(button_pressed):
 func _on_SFX_toggled(button_pressed):
 	GameManager.set_sfx_state(button_pressed)
 
+func _on_Credits_pressed():
+	CreditsPopup.popup()
+
 #+++++++++++++++++++++++++ OTHERS +++++++++++++++++++++++++++++++++++
+
 func set_sound_state():
 	MusicButton.pressed = !GameManager.music_state
 	SFXButton.pressed = !GameManager.sfx_state
-
 

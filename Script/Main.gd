@@ -52,8 +52,8 @@ func _ready():
 	get_tree().set_auto_accept_quit(false)	#for windows
 	
 	add_cooldown_timer()
-	
 	set_sound_state()
+	GameManager.update_hint_ui(HintCount)
 	
 	move_sfx = $Move
 	
@@ -324,7 +324,7 @@ func get_swipe_norm(ctg):
 #+++++++++++++++++++++++++ BUTTON PRESS +++++++++++++++++++++++++
 
 func _on_solve_pressed():
-	if GameManager.hint_count > 0:
+	if GameManager.save_data["hint"] > 0:
 		clear_solve_line()
 		find_solution(curr_touch_grid)
 		SolveLine.visible = true
