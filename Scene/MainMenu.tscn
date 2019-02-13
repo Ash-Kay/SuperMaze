@@ -15,7 +15,7 @@
 [ext_resource path="res://Fonts/Montserrat_90.tres" type="DynamicFont" id=13]
 [ext_resource path="res://Fonts/Montserrat_50.tres" type="DynamicFont" id=14]
 
-[node name="MainMenu" type="Node" index="0"]
+[node name="MainMenu" type="Node"]
 
 script = ExtResource( 1 )
 
