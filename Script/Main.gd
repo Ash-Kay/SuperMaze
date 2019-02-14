@@ -12,12 +12,10 @@ const W = 8
 var cell_walls = {Vector2(0, -1): N, Vector2(1, 0): E, 
 				  Vector2(0, 1): S, Vector2(-1, 0): W}
 
-var tile_size = 64  # tile size (in pixels)
-var width = 30  # width of map (in tiles)
-var height = 40  # height of map (in tiles)
+var tile_size  # tile size (in pixels)
+var width  # width of map (in tiles)
+var height  # height of map (in tiles)
 var scr_size
-
-var move_sfx
 
 var curr_touch_grid = Vector2(0, 0)
 var base_touch_pos
@@ -36,6 +34,8 @@ onready var Map = $TileMap
 onready var Line = $Line2D
 onready var SolveLine = $SolvedPath
 onready var BG = $BG
+onready var move_sfx = $Move
+onready var lvl_com_sfx = $LevelComplete
 onready var HintCount = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/HintCount")
 onready var PauseMenu = get_node("GameGUI/PauseMenu")
 onready var PlayPauseButton = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/PlayPause")
@@ -55,7 +55,6 @@ func _ready():
 	set_sound_state()
 	GameManager.update_hint_ui(HintCount)
 	
-	move_sfx = $Move
 	
 	#print(OS.window_size)
 	tile_size = Map.cell_size
@@ -280,6 +279,7 @@ func draw_line():
 			move_sfx.play()
 		
 	if curr_touch_grid == end_point:
+		lvl_com_sfx.play()
 		RELOAD()
 
 func get_swipe_dir():

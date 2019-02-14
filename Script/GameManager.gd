@@ -42,16 +42,12 @@ func _ready():
 		KEY = OS.get_unique_id()
 		
 	check_savegame()
-	check_daily_reward()
 	
 	BGMusic = load("res://Scene/BGMusic.tscn").instance()
 	add_child(BGMusic)
 	
 	play_rand_music()
 	select_palette()
-	
-#	print(String(OS.get_datetime()))
-#	print(String(OS.get_unix_time()))
 	
 
 func select_palette():
@@ -84,8 +80,11 @@ func save_game():
 func check_daily_reward():
 	if OS.get_unix_time() - save_data["rewardtime"] >= 86400:
 		save_data["rewardtime"] = OS.get_unix_time()
-		save_data["hint"] += randi() % 3 + 3
+		var inc_amt = randi() % 2 + 1
+		save_data["hint"] += inc_amt
 		save_game()
+		return inc_amt
+	return -1
 
 #++++++++++++++++++++++ GAME CONTROL AND SIGNALS +++++++++++++++++++++++++++++++
 

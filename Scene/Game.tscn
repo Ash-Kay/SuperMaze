@@ -1,19 +1,20 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Script/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scene/BG.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprite/TileSet.tres" type="TileSet" id=3]
 [ext_resource path="res://Audio/click_cc0.wav" type="AudioStream" id=4]
-[ext_resource path="res://Sprite/game-pause.svg" type="Texture" id=5]
-[ext_resource path="res://Sprite/Play1.png" type="Texture" id=6]
-[ext_resource path="res://Fonts/Montserrat_90.tres" type="DynamicFont" id=7]
-[ext_resource path="res://Sprite/light-bulb.svg" type="Texture" id=8]
-[ext_resource path="res://Sprite/music_on.svg" type="Texture" id=9]
-[ext_resource path="res://Sprite/music_off.svg" type="Texture" id=10]
-[ext_resource path="res://Sprite/sfx-on.svg" type="Texture" id=11]
-[ext_resource path="res://Sprite/sfx-off.svg" type="Texture" id=12]
-[ext_resource path="res://Sprite/menu.svg" type="Texture" id=13]
-[ext_resource path="res://Sprite/cancel.svg" type="Texture" id=14]
+[ext_resource path="res://Audio/save.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sprite/game-pause.svg" type="Texture" id=6]
+[ext_resource path="res://Sprite/Play1.png" type="Texture" id=7]
+[ext_resource path="res://Fonts/Montserrat_90.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Sprite/hint.svg" type="Texture" id=9]
+[ext_resource path="res://Sprite/music_on.svg" type="Texture" id=10]
+[ext_resource path="res://Sprite/music_off.svg" type="Texture" id=11]
+[ext_resource path="res://Sprite/sfx-on.svg" type="Texture" id=12]
+[ext_resource path="res://Sprite/sfx-off.svg" type="Texture" id=13]
+[ext_resource path="res://Sprite/menu.svg" type="Texture" id=14]
+[ext_resource path="res://Sprite/cancel.svg" type="Texture" id=15]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -86,9 +87,18 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="EndHolder" type="Node" parent="." index="5"]
+[node name="LevelComplete" type="AudioStreamPlayer" parent="." index="5"]
 
-[node name="GameGUI" type="Control" parent="." index="6"]
+stream = ExtResource( 5 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="EndHolder" type="Node" parent="." index="6"]
+
+[node name="GameGUI" type="Control" parent="." index="7"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -122,7 +132,6 @@ _sections_unfolded = [ "Margin" ]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameGUI/MarginContainer" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -175,8 +184,8 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 5 )
-texture_pressed = ExtResource( 6 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 7 )
 _sections_unfolded = [ "Textures" ]
 
 [node name="Control" type="Control" parent="GameGUI/MarginContainer/VBoxContainer/HBoxContainer" index="1"]
@@ -211,7 +220,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 7 )
+custom_fonts/font = ExtResource( 8 )
 text = "5"
 align = 2
 percent_visible = 1.0
@@ -239,8 +248,8 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 8 )
-_sections_unfolded = [ "Margin", "Rect", "Size Flags", "custom_fonts" ]
+texture_normal = ExtResource( 9 )
+_sections_unfolded = [ "Margin", "Rect", "Size Flags", "Textures", "custom_fonts" ]
 
 [node name="PauseMenu" type="Popup" parent="GameGUI" index="1"]
 
@@ -384,8 +393,8 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 9 )
-texture_pressed = ExtResource( 10 )
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 11 )
 _sections_unfolded = [ "Textures" ]
 
 [node name="Space" type="Control" parent="GameGUI/PauseMenu/MarginContainer/VBoxContainer/SoundControl" index="1"]
@@ -425,8 +434,8 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 11 )
-texture_pressed = ExtResource( 12 )
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 13 )
 _sections_unfolded = [ "Textures" ]
 
 [node name="Space1" type="HBoxContainer" parent="GameGUI/PauseMenu/MarginContainer/VBoxContainer" index="1"]
@@ -485,7 +494,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 13 )
+texture_normal = ExtResource( 14 )
 _sections_unfolded = [ "Textures" ]
 
 [node name="Space2" type="HBoxContainer" parent="GameGUI/PauseMenu/MarginContainer/VBoxContainer" index="3"]
@@ -544,7 +553,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 14 )
+texture_normal = ExtResource( 15 )
 _sections_unfolded = [ "Textures" ]
 
 [connection signal="pressed" from="GameGUI/MarginContainer/VBoxContainer/HBoxContainer/PlayPause" to="." method="_on_PlayPause_pressed"]
