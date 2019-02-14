@@ -36,11 +36,10 @@ onready var SolveLine = $SolvedPath
 onready var BG = $BG
 onready var move_sfx = $Move
 onready var lvl_com_sfx = $LevelComplete
+onready var LCParticle = $LCParticle
 onready var HintCount = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/HintCount")
 onready var PauseMenu = get_node("GameGUI/PauseMenu")
 onready var PlayPauseButton = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/PlayPause")
-onready var PauseMenuBorder = get_node("GameGUI/PauseMenu/Border")
-onready var PauseMenuInner = get_node("GameGUI/PauseMenu/Border/MarginContainer/Inner")
 onready var MusicButton = get_node("GameGUI/PauseMenu/MarginContainer/VBoxContainer/SoundControl/Music")
 onready var SFXButton = get_node("GameGUI/PauseMenu/MarginContainer/VBoxContainer/SoundControl/SFX")
 
@@ -97,9 +96,6 @@ func RELOAD():
 func change_color():
 	BG.modulate = Color(GameManager.dark_color)
 	Map.modulate = Color(GameManager.light_color)
-	
-	PauseMenuInner.color = Color("be"+GameManager.dark_color)
-	PauseMenuBorder.color = Color("be"+GameManager.light_color)
 
 func set_sound_state():
 	MusicButton.pressed = !GameManager.music_state
@@ -177,6 +173,8 @@ func set_end_points():
 	
 	end_holder.add_child(start_point_sprite)
 	end_holder.add_child(end_point_sprite)
+	
+	LCParticle.position = grid_to_pixel(end_point)
 
 #+++++++++++++++++++++++++ MAZE SOLVING +++++++++++++++++++
 
@@ -268,8 +266,14 @@ func touch_input():
 		cool_down_timer.start()
 
 func draw_line():
+	if curr_touch_grid == end_point:
+		LCParticle.restart()
+		lvl_com_sfx.play()
+		yield(get_tree().create_timer(2),"timeout")
+		RELOAD()
+		
 	#if go back remove line point
-	if(line_points.size() >= 2 and curr_touch_grid == line_points[line_points.size()-2]):
+	elif(line_points.size() >= 2 and curr_touch_grid == line_points[line_points.size()-2]):
 		Line.remove_point(line_points.size()-1)
 		line_points.pop_back()
 	else:
@@ -277,10 +281,6 @@ func draw_line():
 		line_points.append(curr_touch_grid)
 		if GameManager.sfx_state:
 			move_sfx.play()
-		
-	if curr_touch_grid == end_point:
-		lvl_com_sfx.play()
-		RELOAD()
 
 func get_swipe_dir():
 	curr_touch_pos = get_viewport().get_mouse_position()
@@ -326,7 +326,7 @@ func get_swipe_norm(ctg):
 				return Vector2(round(dir.x),0)
 	return false
 
-#+++++++++++++++++++++++++ BUTTON PRESS +++++++++++++++++++++++++
+#+++++++++++++++++++++++++ BUTTON PRESS SIGNALS +++++++++++++++++++++++++
 
 func _on_solve_pressed():
 	if GameManager.save_data["hint"] > 0:
@@ -338,9 +338,6 @@ func _on_solve_pressed():
 
 func _on_PlayPause_pressed():
 	PauseMenu.popup()
-
-func _on_ClosePauseMenu_pressed():
-	PauseMenu.hide()
 
 func _on_GotoMainMenu_pressed():
 	get_tree().change_scene("res://Scene/MainMenu.tscn")

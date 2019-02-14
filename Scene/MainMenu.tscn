@@ -18,7 +18,7 @@
 [ext_resource path="res://Fonts/Montserrat_50.tres" type="DynamicFont" id=16]
 [ext_resource path="res://Sprite/hint.svg" type="Texture" id=17]
 
-[node name="MainMenu" type="Node" index="0"]
+[node name="MainMenu" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -45,7 +45,6 @@ _sections_unfolded = [ "Size Flags" ]
 
 [node name="MarginContainer" type="MarginContainer" parent="UI" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -209,7 +208,6 @@ _sections_unfolded = [ "Anchor", "Margin", "Size Flags", "Textures", "custom_fon
 
 [node name="OtherButtons" type="HBoxContainer" parent="UI/MarginContainer/VBox" index="3"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
