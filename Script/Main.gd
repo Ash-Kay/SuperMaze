@@ -96,6 +96,8 @@ func RELOAD():
 func change_color():
 	BG.modulate = Color(GameManager.dark_color)
 	Map.modulate = Color(GameManager.light_color)
+	PauseMenu.set_ui_color()
+	
 
 func set_sound_state():
 	MusicButton.pressed = !GameManager.music_state
@@ -286,7 +288,7 @@ func draw_line():
 		can_draw = false
 		cool_down_timer.set_wait_time(5)
 		yield(get_tree().create_timer(2),"timeout")
-		cool_down_timer.set_wait_time(0.05)
+		cool_down_timer.set_wait_time(0.1)
 		RELOAD()
 
 func get_swipe_dir():
@@ -372,7 +374,7 @@ func _notification(what):
 func add_cooldown_timer():
 	cool_down_timer = Timer.new()
 	cool_down_timer.set_one_shot(true)
-	cool_down_timer.set_wait_time(0.05)
+	cool_down_timer.set_wait_time(0.1)
 	cool_down_timer.connect("timeout", self, "on_timeout_complete")
 	add_child(cool_down_timer)
 

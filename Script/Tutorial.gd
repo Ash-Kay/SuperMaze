@@ -17,6 +17,8 @@ var width  # width of map (in tiles)
 var height  # height of map (in tiles)
 var scr_size
 
+var GameScene = "res://Scene/Game.tscn"
+
 var curr_touch_grid = Vector2(0, 0)
 var base_touch_pos
 var curr_touch_pos
@@ -38,6 +40,7 @@ onready var move_sfx = $Move
 onready var lvl_com_sfx = $LevelComplete
 onready var LCParticle = $LCParticle
 onready var Instruction = $Instruction
+onready var AnimPlayer = get_node("Instruction/AnimationPlayer")
 onready var HintCount = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/HintCount")
 onready var PauseMenu = get_node("GameGUI/PauseMenu")
 onready var PlayPauseButton = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/PlayPause")
@@ -99,6 +102,7 @@ func RELOAD():
 func change_color():
 	BG.modulate = Color(GameManager.dark_color)
 	Map.modulate = Color(GameManager.light_color)
+	PauseMenu.set_ui_color()
 
 func set_sound_state():
 	MusicButton.pressed = !GameManager.music_state
@@ -290,7 +294,7 @@ func draw_line():
 		cool_down_timer.set_wait_time(5)
 		yield(get_tree().create_timer(2),"timeout")
 		cool_down_timer.set_wait_time(0.05)
-		RELOAD()
+		get_tree().change_scene(GameScene)
 
 func get_swipe_dir():
 	curr_touch_pos = get_viewport().get_mouse_position()
@@ -380,19 +384,10 @@ func add_cooldown_timer():
 	add_child(cool_down_timer)
 
 func show_tutorial():
-	yield(get_tree().create_timer(5),"timeout")
-	Instruction.text = "Swipe and Hold to move to move"
-	yield(get_tree().create_timer(5),"timeout")
-	Instruction.text = "Swipe to move precisely"
-	yield(get_tree().create_timer(5),"timeout")
-	Instruction.text = "Use Hint(Bulb) to get hint"
-	yield(get_tree().create_timer(5),"timeout")
-	Instruction.text = "Reach to GREEN endpoint"
+	AnimPlayer.play("tutorial")
+
+func show_levelend_anim():
 	LCParticle.restart()
-
-
-
-
 
 
 

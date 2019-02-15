@@ -7,7 +7,11 @@ var light_color
 var dark_color
 
 var save_data = {"hint": 5, "rewardtime": 0}
-var config_data = {"firstrun": true}
+var config_data = {
+		"golbal":{
+			"firstrun": true
+		}
+	}
 
 var save_game_file = File.new()
 var config_file = ConfigFile.new()
@@ -42,6 +46,7 @@ func _ready():
 		KEY = OS.get_unique_id()
 		
 	check_savegame()
+	load_config()
 	
 	BGMusic = load("res://Scene/BGMusic.tscn").instance()
 	add_child(BGMusic)
@@ -57,8 +62,7 @@ func select_palette():
 
 #+++++++++++++++++++++++++ SAVE DATA ++++++++++++++++++++++++++++++++
 
-func check_savegame():
-	
+func check_savegame():	
 	if not save_game_file.file_exists(SAVE_PATH):
 		save_game_file.open_encrypted_with_pass(SAVE_PATH, File.WRITE, KEY)
 		save_game_file.store_var(to_json(save_data))
@@ -75,11 +79,30 @@ func save_game():
 		save_game_file.store_var(to_json(save_data))
 		save_game_file.close()
 
+func save_config():
+	for section in config_data.keys():
+		for key in config_data[section]:
+			config_file.set_value(section,key,config_data[section][key])
+	config_file.save(CONFIG_PATH)
+
+func load_config():
+	var error = config_file.load(CONFIG_PATH)
+	if error != OK:
+		return
+	for section in config_data.keys():
+		for key in config_data[section]:
+			config_data[section][key] = config_file.get_value(section,key,null)
+
 #+++++++++++++++++++++++++++++++ OTHERS +++++++++++++++++++++++++++++++++++
 
 func check_daily_reward():
 	if OS.get_unix_time() - save_data["rewardtime"] >= 86400:
-		save_data["rewardtime"] = OS.get_unix_time()
+		#turn current time to 12AM
+		var date_time_norm = OS.get_datetime()
+		date_time_norm["hour"] = 0
+		date_time_norm["minute"] = 0
+		date_time_norm["second"] = 0
+		save_data["rewardtime"] = OS.get_unix_time_from_datetime(date_time_norm)
 		var inc_amt = randi() % 2 + 1
 		save_data["hint"] += inc_amt
 		save_game()

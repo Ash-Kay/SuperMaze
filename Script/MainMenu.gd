@@ -1,6 +1,7 @@
 extends Node
 
 var GameScene = "res://Scene/Game.tscn"
+var TutorialScene = "res://Scene/Tutorial.tscn"
 
 onready var UInode = $UI
 onready var BG = $BG
@@ -14,17 +15,24 @@ func _ready():
 	get_tree().set_quit_on_go_back(true)
 	set_MainMenu_color()
 	set_sound_state()
-	
+	check_daily_popup()
 
 func set_MainMenu_color():
 	UInode.modulate = Color(GameManager.light_color)
 	BG.modulate = Color(GameManager.dark_color)
-	
+	SettingPopup.set_ui_color()
+	CreditsPopup.set_ui_color()
+	DailyRewards.set_ui_color()
 
 #++++++++++++++++++++++++ SIGNALS +++++++++++++++++++++++++++++++
 
 func _on_play_pressed():
-	get_tree().change_scene(GameScene)
+	if GameManager.config_data["golbal"]["firstrun"] == true:
+		GameManager.config_data["golbal"]["firstrun"] = false
+		GameManager.save_config()
+		get_tree().change_scene(TutorialScene)
+	else:
+		get_tree().change_scene(GameScene)
 
 func _on_settings_pressed():
 	SettingPopup.popup()
