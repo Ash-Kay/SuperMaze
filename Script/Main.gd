@@ -208,6 +208,7 @@ func backtracker(dic, start):
 	while curr != start:
 		SolveLine.add_point(grid_to_pixel(curr))
 		curr = dic[curr]
+	SolveLine.add_point(grid_to_pixel(start))
 	
 	print(SolveLine.get_point_count())
 	if SolveLine.get_point_count() < 150 and start == start_point:
@@ -216,9 +217,12 @@ func backtracker(dic, start):
 		var solve_points = SolveLine.get_points()
 		var solve_points_short = []
 		SolveLine.visible = false
-		for i in range(solve_points.size()-1, solve_points.size()-21, -1):
-			solve_points_short.append(solve_points[i])
-		SolveLine.set_points(solve_points_short)
+		if solve_points.size() > 21:
+			for i in range(solve_points.size()-1, solve_points.size()-21, -1):
+				solve_points_short.append(solve_points[i])
+			SolveLine.set_points(solve_points_short)
+		else:
+			SolveLine.set_points(solve_points)
 
 func clear_solve_line():
 	SolveLine.set_points([])
@@ -266,14 +270,8 @@ func touch_input():
 		cool_down_timer.start()
 
 func draw_line():
-	if curr_touch_grid == end_point:
-		LCParticle.restart()
-		lvl_com_sfx.play()
-		yield(get_tree().create_timer(2),"timeout")
-		RELOAD()
-		
 	#if go back remove line point
-	elif(line_points.size() >= 2 and curr_touch_grid == line_points[line_points.size()-2]):
+	if(line_points.size() >= 2 and curr_touch_grid == line_points[line_points.size()-2]):
 		Line.remove_point(line_points.size()-1)
 		line_points.pop_back()
 	else:
@@ -281,6 +279,15 @@ func draw_line():
 		line_points.append(curr_touch_grid)
 		if GameManager.sfx_state:
 			move_sfx.play()
+			
+	if curr_touch_grid == end_point:
+		LCParticle.restart()
+		lvl_com_sfx.play()
+		can_draw = false
+		cool_down_timer.set_wait_time(5)
+		yield(get_tree().create_timer(2),"timeout")
+		cool_down_timer.set_wait_time(0.05)
+		RELOAD()
 
 func get_swipe_dir():
 	curr_touch_pos = get_viewport().get_mouse_position()

@@ -207,6 +207,7 @@ func find_solution(start):
 
 func backtracker(dic, start):
 	var curr = dic[end_point]
+	
 	while curr != start:
 		SolveLine.add_point(grid_to_pixel(curr))
 		curr = dic[curr]
