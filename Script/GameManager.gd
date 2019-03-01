@@ -62,7 +62,7 @@ func select_palette():
 
 #+++++++++++++++++++++++++ SAVE DATA ++++++++++++++++++++++++++++++++
 
-func check_savegame():	
+func check_savegame():
 	if not save_game_file.file_exists(SAVE_PATH):
 		save_game_file.open_encrypted_with_pass(SAVE_PATH, File.WRITE, KEY)
 		save_game_file.store_var(to_json(save_data))

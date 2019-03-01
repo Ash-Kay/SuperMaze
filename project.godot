@@ -8,6 +8,10 @@
 
 config_version=3
 
+[android]
+
+modules="org/godotengine/godot/GodotAdMob"
+
 [application]
 
 config/name="SuperMaze"
@@ -18,6 +22,7 @@ config/quit_on_go_back=false
 [autoload]
 
 GameManager="*res://Script/GameManager.gd"
+AD="*res://Script/AD.gd"
 
 [display]
 
