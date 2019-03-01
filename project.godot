@@ -10,7 +10,7 @@ config_version=3
 
 [android]
 
-modules="org/godotengine/godot/GodotAdMob"
+modules="org/godotengine/godot/GodotAdMob,org/godotengine/godot/GodotPaymentV3"
 
 [application]
 
@@ -23,6 +23,7 @@ config/quit_on_go_back=false
 
 GameManager="*res://Script/GameManager.gd"
 AD="*res://Script/AD.gd"
+IAP="*res://Script/IAP.gd"
 
 [display]
 
