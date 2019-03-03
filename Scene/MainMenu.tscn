@@ -351,6 +351,7 @@ size_flags_vertical = 1
 popup_exclusive = true
 script = ExtResource( 9 )
 _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect", "Size Flags" ]
+alpha = "be"
 
 [node name="Border" type="ColorRect" parent="UI/Settings" index="0"]
 
@@ -622,6 +623,7 @@ size_flags_vertical = 1
 popup_exclusive = true
 script = ExtResource( 9 )
 _sections_unfolded = [ "Rect" ]
+alpha = "be"
 
 [node name="Border" type="ColorRect" parent="UI/Credits" index="0"]
 
@@ -972,6 +974,7 @@ size_flags_vertical = 1
 popup_exclusive = true
 script = ExtResource( 9 )
 _sections_unfolded = [ "Rect" ]
+alpha = "be"
 
 [node name="Border" type="ColorRect" parent="UI/DailyRewards" index="0"]
 

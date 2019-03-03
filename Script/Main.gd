@@ -39,6 +39,7 @@ onready var lvl_com_sfx = $LevelComplete
 onready var LCParticle = $LCParticle
 onready var HintCount = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/HintCount")
 onready var PauseMenu = get_node("GameGUI/PauseMenu")
+onready var ShopMenu = get_node("GameGUI/ShopPopup")
 onready var PlayPauseButton = get_node("GameGUI/MarginContainer/VBoxContainer/HBoxContainer/PlayPause")
 onready var MusicButton = get_node("GameGUI/PauseMenu/MarginContainer/VBoxContainer/SoundControl/Music")
 onready var SFXButton = get_node("GameGUI/PauseMenu/MarginContainer/VBoxContainer/SoundControl/SFX")
@@ -285,7 +286,8 @@ func draw_line():
 			
 	if curr_touch_grid == end_point:
 		LCParticle.restart()
-		lvl_com_sfx.play()
+		if GameManager.sfx_state:
+			lvl_com_sfx.play()
 		can_draw = false
 		cool_down_timer.set_wait_time(5)
 		yield(get_tree().create_timer(2),"timeout")
@@ -345,6 +347,8 @@ func _on_solve_pressed():
 		SolveLine.visible = true
 		GameManager.use_hint()
 		GameManager.update_hint_ui(HintCount)
+	else:
+		ShopMenu.popup()
 
 func _on_PlayPause_pressed():
 	PauseMenu.popup()

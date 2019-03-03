@@ -27,8 +27,8 @@ func set_MainMenu_color():
 #++++++++++++++++++++++++ SIGNALS +++++++++++++++++++++++++++++++
 
 func _on_play_pressed():
-	if GameManager.config_data["golbal"]["firstrun"] == true:
-		GameManager.config_data["golbal"]["firstrun"] = false
+	if GameManager.config_data["global"]["firstrun"] == true:
+		GameManager.config_data["global"]["firstrun"] = false
 		GameManager.save_config()
 		get_tree().change_scene(TutorialScene)
 	else:

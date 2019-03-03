@@ -6,10 +6,10 @@ var BGMusic
 var light_color
 var dark_color
 
-var save_data = {"hint": 5, "rewardtime": 0}
+var save_data = {"hint": 5, "rewardtime": 0, "coin": 0}
 var config_data = {
-		"golbal":{
-			"firstrun": true
+		"global":{
+			"firstrun": true, "musicstate": true, "sfxstate": true
 		}
 	}
 
@@ -47,13 +47,14 @@ func _ready():
 		
 	check_savegame()
 	load_config()
+	load_sound_state()
 	
 	BGMusic = load("res://Scene/BGMusic.tscn").instance()
 	add_child(BGMusic)
 	
 	play_rand_music()
 	select_palette()
-	
+	print(String(config_data))
 
 func select_palette():
 	var rand_color_index = randi() % color_palette.size()
@@ -69,9 +70,12 @@ func check_savegame():
 		save_game_file.close()
 	else:
 		save_game_file.open_encrypted_with_pass(SAVE_PATH, File.READ, KEY)
-		save_data = parse_json( save_game_file.get_var() )
+		var temp_save_data = parse_json( save_game_file.get_var() )
+		check_save_consistency_and_load(temp_save_data)
+#		save_data = parse_json( save_game_file.get_var() )
 		print( save_data )
 		save_game_file.close()
+		save_game()
 
 func save_game():
 	if save_game_file.file_exists(SAVE_PATH):
@@ -93,6 +97,20 @@ func load_config():
 		for key in config_data[section]:
 			config_data[section][key] = config_file.get_value(section,key,null)
 
+func check_save_consistency_and_load(loaded_data):
+	#ADD new data
+	if save_data.keys().size() > loaded_data.keys().size():
+		for key in loaded_data.keys():
+			save_data[key] = loaded_data[key]
+			
+	#Remove Old data
+	elif save_data.keys().size() < loaded_data.keys().size():
+		for key in save_data.keys():
+			save_data[key] = loaded_data[key]
+	
+	else:
+		save_data = loaded_data
+
 #+++++++++++++++++++++++++++++++ OTHERS +++++++++++++++++++++++++++++++++++
 
 func check_daily_reward():
@@ -109,7 +127,7 @@ func check_daily_reward():
 		return inc_amt
 	return -1
 
-#++++++++++++++++++++++ GAME CONTROL AND SIGNALS +++++++++++++++++++++++++++++++
+#++++++++++++++++++++++ GAME CONTROL AND SOUND +++++++++++++++++++++++++++++++
 
 func hint_inc(amt):
 	save_data["hint"] += amt
@@ -124,8 +142,15 @@ func update_hint_ui(label):
 #	label.text = String(hint_count)
 	label.text = String(save_data["hint"])
 
+func load_sound_state():
+	music_state = config_data["global"]["musicstate"]
+	sfx_state = config_data["global"]["sfxstate"]
+
 func set_music_state(state):
 	music_state = !state
+	config_data["global"]["musicstate"] = music_state
+	save_config()
+	
 	BGMusic.playing = music_state
 	
 	if music_state:
@@ -134,11 +159,15 @@ func set_music_state(state):
 
 func set_sfx_state(state):
 	sfx_state = !state
+	config_data["global"]["sfxstate"] = sfx_state
+	save_config()
+	
 	print("GM sfx : "+String(sfx_state))
 
 func _on_music_finished():
 	play_rand_music()
 
 func play_rand_music():
-	BGMusic.stream = load(music_path[ randi() % music_path.size() ])
-	BGMusic.playing = true
+	if music_state:
+		BGMusic.stream = load(music_path[ randi() % music_path.size() ])
+		BGMusic.playing = true

@@ -9,14 +9,14 @@
 [ext_resource path="res://Sprite/Play1.png" type="Texture" id=7]
 [ext_resource path="res://Fonts/Montserrat_90.tres" type="DynamicFont" id=8]
 [ext_resource path="res://Sprite/hint.svg" type="Texture" id=9]
-[ext_resource path="res://Sprite/add.svg" type="Texture" id=10]
-[ext_resource path="res://Script/PopupColor_Close.gd" type="Script" id=11]
-[ext_resource path="res://Sprite/music_on.svg" type="Texture" id=12]
-[ext_resource path="res://Sprite/music_off.svg" type="Texture" id=13]
-[ext_resource path="res://Sprite/sfx-on.svg" type="Texture" id=14]
-[ext_resource path="res://Sprite/sfx-off.svg" type="Texture" id=15]
-[ext_resource path="res://Sprite/menu.svg" type="Texture" id=16]
-[ext_resource path="res://Sprite/cancel.svg" type="Texture" id=17]
+[ext_resource path="res://Script/PopupColor_Close.gd" type="Script" id=10]
+[ext_resource path="res://Sprite/music_on.svg" type="Texture" id=11]
+[ext_resource path="res://Sprite/music_off.svg" type="Texture" id=12]
+[ext_resource path="res://Sprite/sfx-on.svg" type="Texture" id=13]
+[ext_resource path="res://Sprite/sfx-off.svg" type="Texture" id=14]
+[ext_resource path="res://Sprite/menu.svg" type="Texture" id=15]
+[ext_resource path="res://Sprite/cancel.svg" type="Texture" id=16]
+[ext_resource path="res://Scene/Shop.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Scene/LCParticle.tscn" type="PackedScene" id=18]
 
 [sub_resource type="CanvasItemMaterial" id=1]
@@ -25,7 +25,7 @@ render_priority = 0
 blend_mode = 1
 light_mode = 0
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node" index="0"]
 
 script = ExtResource( 1 )
 x_margin = 0.0
@@ -136,7 +136,6 @@ _sections_unfolded = [ "Margin" ]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameGUI/MarginContainer" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -200,7 +199,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 100.0
-margin_right = 800.0
+margin_right = 846.0
 margin_bottom = 111.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -216,8 +215,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 804.0
-margin_right = 856.0
+margin_left = 850.0
+margin_right = 902.0
 margin_bottom = 111.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -239,8 +238,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 860.0
-margin_right = 962.0
+margin_left = 906.0
+margin_right = 1008.0
 margin_bottom = 111.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -255,30 +254,6 @@ shortcut = null
 group = null
 texture_normal = ExtResource( 9 )
 _sections_unfolded = [ "Margin", "Rect", "Size Flags", "Textures", "custom_fonts" ]
-
-[node name="GetMoreHint" type="TextureButton" parent="GameGUI/MarginContainer/VBoxContainer/HBoxContainer" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 966.0
-margin_top = 34.0
-margin_right = 1008.0
-margin_bottom = 76.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-texture_normal = ExtResource( 10 )
-_sections_unfolded = [ "Margin", "Size Flags" ]
 
 [node name="PauseMenu" type="Popup" parent="GameGUI" index="1"]
 
@@ -300,8 +275,9 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 popup_exclusive = true
-script = ExtResource( 11 )
+script = ExtResource( 10 )
 _sections_unfolded = [ "Anchor", "Margin", "Popup", "Rect" ]
+alpha = "be"
 
 [node name="Border" type="ColorRect" parent="GameGUI/PauseMenu" index="0"]
 
@@ -423,8 +399,8 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 12 )
-texture_pressed = ExtResource( 13 )
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
 _sections_unfolded = [ "Textures" ]
 
 [node name="Space" type="Control" parent="GameGUI/PauseMenu/MarginContainer/VBoxContainer/SoundControl" index="1"]
@@ -464,8 +440,8 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 14 )
-texture_pressed = ExtResource( 15 )
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
 _sections_unfolded = [ "Textures" ]
 
 [node name="Space1" type="HBoxContainer" parent="GameGUI/PauseMenu/MarginContainer/VBoxContainer" index="1"]
@@ -523,7 +499,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 16 )
+texture_normal = ExtResource( 15 )
 _sections_unfolded = [ "Textures" ]
 
 [node name="Space2" type="HBoxContainer" parent="GameGUI/PauseMenu/MarginContainer/VBoxContainer" index="3"]
@@ -581,8 +557,13 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 17 )
+texture_normal = ExtResource( 16 )
 _sections_unfolded = [ "Textures" ]
+
+[node name="ShopPopup" parent="GameGUI" index="2" instance=ExtResource( 17 )]
+
+visible = false
+_sections_unfolded = [ "Popup", "Rect" ]
 
 [node name="LCParticle" parent="." index="8" instance=ExtResource( 18 )]
 
